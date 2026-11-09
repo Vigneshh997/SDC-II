@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is the X-Fusion research frontend. See [the current project setup guide](../HOW_TO_START.md) for backend readiness, required observed inputs, report behavior and release limitations. The instructions below are the original Next.js scaffold reference.
 
 ## Getting Started
 

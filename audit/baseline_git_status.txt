@@ -1,0 +1,71 @@
+ D RESEARCH_PAPER/X-Fusion_Final_IEEE.pdf
+ D RESEARCH_PAPER/X_Fusion_IEEE_Final.pdf
+ M RESEARCH_PAPER/X_Fusion_IEEE_Final.tex
+ D X_Fusion_IEEE_Paper.docx
+ D X_Fusion_IEEE_Paper.pdf
+ D X_Fusion_IEEE_Paper.tex
+ D documents/assets/XFusion_Figure1_Architecture.png
+ D documents/assets/XFusion_Figure2_Model_Comparison.png
+ D documents/assets/XFusion_Figure3_ROC_Ablation.png
+ D documents/assets/XFusion_Figure4_Explainability.png
+ D documents/latex/CliniFusionX_architecture.tex
+ D documents/latex/CliniFusion_X_IEEE.tex
+ D documents/latex/Figure_2_Model_Comparison.png
+ D documents/latex/IEEE_X_Fusion_Paper.tex
+ D documents/latex/X-Fusion_Final_IEEE.tex
+ D documents/latex/X-Fusion_IEEE_Conference_Paper.tex
+ D documents/latex/X-Fusion_clickable_citations.tex
+ D documents/latex/XFusion_Figure1_Architecture.png
+ D documents/latex/XFusion_Figure2_Model_Comparison.png
+ D documents/latex/XFusion_Figure3_ROC_Ablation.png
+ D documents/latex/XFusion_Figure4_Explainability.png
+ D documents/latex/X_Fusion_IEEE_Paper.tex
+ D documents/pdf/IEEE_X_Fusion_Paper.pdf
+ D documents/pdf/X-Fusion_Final_IEEE.pdf
+ D documents/pdf/X-Fusion_IEEE_Conference_Paper.pdf
+ D documents/pdf/X-Fusion_IEEE_clickable_final.pdf
+ D documents/pdf/X_Fusion_IEEE_Paper.pdf
+ D documents/word/CliniFusion_X_IEEE.docx
+ D documents/word/Figure_2_Model_Comparison.png
+ D documents/word/IEEE_X_Fusion_Paper.docx
+ D documents/word/MM_DAViT_Project_Enhancement_Document.docx
+ D documents/word/Template_IEEE.docx
+ D documents/word/X-Fusion_Final_IEEE.doc
+ D documents/word/X-Fusion_Final_IEEE.docx
+ D documents/word/X-Fusion_Final_IEEE_editable.docx
+ D documents/word/X-Fusion_SRS_Polished.docx
+ D documents/word/X_Fusion_IEEE_Paper.docx
+ D documents/word/converted.docx
+ D generate_ieee_paper.py
+?? "Conference Management Toolkit - Submission Summary.pdf"
+?? DAViT_A_Domain-Adapted_Vision_Transformer_for_Automated_Pneumonia_Detection_and_Explanation_Using_Chest_X-Ray_Images.pdf
+?? Download+the+journal+article+template+package+(December+2024+version).zip
+?? FINAL_PAPER_SPRINGER/
+?? MIKE_2026_AUTHOR_NOTES.md
+?? MIKE_2026_COAUTHORS_PRIVATE.md
+?? MIKE_2026_EVIDENCE_UPDATED/
+?? MIKE_2026_REVISED/
+?? MIKE_2026_SUBMISSION/
+?? PROJECT_COMPLETE_CONTEXT.md
+?? RESEARCH_PAPER/X_Fusion_IEEE_Camera_Ready.pdf
+?? RESEARCH_PAPER/X_Fusion_IEEE_Camera_Ready.tex
+?? RESEARCH_PAPER/fig2.png
+?? RESEARCH_PAPER/fig4.jpeg
+?? RESEARCH_PAPER/figures/
+?? RESEARCH_PAPER/reconstructed_pdf/
+?? X_Fusion_IEEE_Camera_Ready.pdf
+?? X_Fusion_IEEE_Camera_Ready.tex
+?? X_Fusion_IEEE_Equation_Explained.pdf
+?? X_Fusion_IEEE_Equation_Explained.tex
+?? "X_Fusion_MIKE2026_Anonymous (1).pdf"
+?? X_Fusion_MIKE2026_Anonymous.pdf
+?? X_Fusion_MIKE2026_Reviewed.zip
+?? X_Fusion_Submission_Audit.md
+?? X_Fusion__Tri_Modal_Transformer_Fusion_forMulti_Label_Chest_X_ray_Analysis.pdf
+?? architecture_and_workflow.md
+?? audit/
+?? cmt3.research.microsoft.com_MIKE2026_Track_1_Submission_Create.png
+?? figures/fig1_architecture.png
+?? figures/fig2_losses.jpg
+?? figures/fig3_cxr.png
+?? tmp/

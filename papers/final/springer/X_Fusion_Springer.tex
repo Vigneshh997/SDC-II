@@ -1,0 +1,344 @@
+% Converted from FINAL_PAPER.zip using the supplied December 2024 template.
+\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\raggedbottom
+\begin{document}
+\title[X-Fusion for Chest X-ray Analysis]{X-Fusion: Tri-Modal Transformer Fusion for Multi-Label Chest X-ray Analysis}
+\author[1]{\fnm{K. Vishal} \sur{Reddy}}\email{Kasarlavishalreddy@gmail.com}
+\author[1]{\fnm{P. Deepesh} \sur{Reddy}}\email{deepeshp113@gmail.com}
+\author[1]{\fnm{R.} \sur{Vignesh}}\email{rvignesh72007@gmail.com}
+\author[1]{\fnm{R. Sidhardh} \sur{Reddy}}\email{sidhardhramini2007@gmail.com}
+\author[1]{\fnm{Saharsh} \sur{Machendra}}\email{saharshbatte356@gmail.com}
+\author[1]{\fnm{Vura Surya} \sur{Venkat}}\email{vuraramesh01@gmail.com}
+
+\affil[1]{\orgdiv{Department of Computer Science and Engineering}, \orgname{Keshav Memorial Institute of Technology}, \orgaddress{\city{Hyderabad}, \state{Telangana}, \country{India}}}
+\abstract{Chest radiographs may contain multiple concurrent thoracic abnormalities, motivating multi-label prediction and the investigation of complementary patient information. X-Fusion is a tri-modal framework combining BiomedCLIP visual features, CXR-BERT clinical-note representations, and six demographic and physiological fields in a shared 512-dimensional space. A compact two-layer, eight-head Transformer fuses three modality tokens and a learned classification token to produce fourteen independent finding scores. Asymmetric Loss and an auxiliary contrastive objective support training, while a web application provides visual attention overlays and metadata attribution. An accompanying experimental draft lists macro AUROC of 0.9420, micro AUROC of 0.9615, and mean average precision of 0.8840, versus 0.8162, 0.8740, and 0.7420 for its vision-only baseline. Prediction-level artifacts were not available to independently verify these values. In the available experimental pipeline, generated clinical notes and vital signs depend on target labels, limiting interpretation of the results as evidence of clinical generalization. The resulting system provides an integrated framework for investigating multimodal thoracic finding prediction, with independent-input validation identified as the next experimental requirement.}
+\keywords{Chest radiography, multimodal learning, Transformer fusion, multi-label classification, explainability}
+\maketitle
+
+\section{Introduction}
+
+Chest radiography is widely used for evaluating thoracic abnormalities. A single image may exhibit several coexisting findings, making multi-label classification more appropriate than mutually exclusive disease prediction. NIH ChestX-ray14 provides a benchmark for this setting \cite{wang2017,nihdataset}. Visual patterns can be ambiguous without clinical context. Patient history and physiological measurements may offer complementary information when these inputs are collected independently of the reference diagnosis.
+
+X-Fusion integrates three information streams comprising a radiograph, a clinical note, and six structured patient attributes. Pretrained BiomedCLIP and CXR-BERT representations are projected into a common feature space and combined with an MLP-based metadata representation using Transformer self-attention. The framework predicts fourteen labels and exposes attention and metadata attribution views through a web interface. The work contributes (i) a compact four-token tri-modal fusion architecture for fourteen-label screening, (ii) a combined imbalance-aware and contrastive training objective, and (iii) an inference interface with separate visual and metadata explanations. The study also describes its experimental setup and evaluation protocol.
+
+
+
+The proposed system addresses the challenge of combining different representations of thoracic findings. A chest radiograph encodes anatomical appearance, a clinical note supplies contextual language, and structured measurements provide numerical context. Each stream has a different representation and measurement scale. A shared latent space makes these streams accessible to a small fusion network without requiring a separate prediction head for every possible combination of modalities.
+
+Three objectives guide the design. First, the prediction head must permit multiple simultaneous findings, including the absence of all fourteen findings. Second, the fusion mechanism should expose a compact set of modality representations suitable for attention-based interaction. Third, the prototype should connect the numerical prediction to an interface in which users can inspect visual attention and metadata attribution separately. The design supports evaluation of multi-label performance, modality contributions, and prediction transparency.
+
+The distinction between an image-derived finding and contextual information is important for evaluation. A multimodal classifier may exploit correlations between patient context and disease labels. Such correlations are informative only when the context is acquired without access to the target label. Accordingly, the source of auxiliary inputs is considered when interpreting experimental comparisons.
+
+\section{Related Work}
+
+Wang et al. introduced the NIH chest radiograph benchmark \cite{wang2017}. CheXpert later addressed uncertain labels and expert comparison \cite{irvin2019}. Vision Transformers model long-range relationships through attention \cite{dosovitskiy2021,vaswani2017}. BiomedCLIP learns biomedical visual representations from image and text pairs \cite{biomedclip2023}, while CXR-BERT specializes language representations for radiology \cite{cxrbert2022}. DAViT explores domain-adapted Transformer modeling for pneumonia detection \cite{davit2025}, a distinct single-disease setting. Asymmetric Loss addresses class imbalance \cite{ridnik2021}. InfoNCE supports representation alignment \cite{oord2018}, while SHAP provides feature attribution \cite{lundberg2017}. Attention visualization alone should not be interpreted as validated disease localization \cite{chefer2021}.
+
+\subsection{Positioning Relative to Prior Systems}
+
+ChestX-ray14 supports weakly supervised multi-label classification, whereas CheXpert introduces a different dataset and uncertainty-handling setting. These datasets should not be treated as interchangeable evaluation cohorts. The DAViT study investigates domain-adapted vision modeling for pneumonia, while X-Fusion targets fourteen independent findings and incorporates two auxiliary information streams. A direct numerical comparison between these studies would involve different labels, data partitions, and evaluation protocols.
+
+The architectural distinction is also relevant. BiomedCLIP provides a pooled image representation rather than passing every image patch directly into the multimodal encoder. CXR-BERT similarly contributes one contextualized text vector. This reduces the fusion sequence to four tokens, including the learned CLS token. The compact design limits the number of interactions computed at the fusion stage, although it discards some fine-grained spatial and linguistic structure. Visual attention overlays are obtained separately from the image backbone rather than from a disease-specific spatial decoder.
+
+Asymmetric Loss and contrastive alignment serve different purposes. The former changes the classification gradient assigned to easy negatives in an imbalanced label matrix. The latter encourages matched image and text representations to align within a minibatch. Neither loss alone guarantees calibrated probabilities or robustness to missing modalities. Those properties require separate evaluation.
+
+\section{Proposed Architecture and Methodology}
+
+\subsection{Modality-Specific Encoders}
+
+For an RGB radiograph $I$, a tokenized note $T$, and ordered metadata vector $m\in\mathbb{R}^{6}$, the encoders produce
+
+\begin{align}
+z_v &= f_v(I)\in\mathbb{R}^{512},
+\label{eq:vision}\\
+z_t &= W_t h_t(T)+b_t\in\mathbb{R}^{512},
+\label{eq:text}\\
+u &= \operatorname{Dropout}_{0.1}
+(\operatorname{GELU}(W_1m+b_1)),
+\label{eq:meta1}\\
+z_m &= \operatorname{GELU}(W_2u+b_2)
+\in\mathbb{R}^{512}.
+\label{eq:meta2}
+\end{align}
+
+BiomedCLIP supplies pooled image features. The first CXR-BERT output token is projected from 768 to 512 dimensions, with notes limited to 256 tokens. The metadata encoder maps age, sex, temperature, heart rate, respiratory rate, and oxygen saturation through a 128-unit hidden layer. The weight matrices have dimensions $W_1\in\mathbb{R}^{128\times6}$ and $W_2\in\mathbb{R}^{512\times128}$.
+
+\subsection{Transformer Fusion}
+
+The learned classification token and three modality vectors form
+
+\begin{equation}
+S_0=[e_{\mathrm{CLS}};z_v;z_t;z_m]
+\in\mathbb{R}^{4\times512}.
+\end{equation}
+
+Two Transformer encoder layers use eight attention heads and a feed-forward width of 2048. Attention is computed as
+
+\begin{equation}
+\operatorname{Attention}(Q,K,V)=
+\operatorname{softmax}
+\left(\frac{QK^\top}{\sqrt{d_k}}\right)V,
+\quad d_k=64.
+\end{equation}
+
+Here $Q$, $K$, and $V$ denote query, key, and value matrices. The key width $d_k=64$ scales the dot products to prevent excessively large attention scores. The fused CLS vector is classified with dropout probability 0.3.
+
+\begin{equation}
+\begin{aligned}
+h &= \operatorname{Transformer}(S_0)_{\mathrm{CLS}},\\
+p_k &= \sigma\!\left(
+\left[W_c\operatorname{Dropout}_{0.3}(h)+b_c\right]_k
+\right).
+\end{aligned}
+\end{equation}
+
+Here $W_c\in\mathbb{R}^{14\times512}$ and $k=1,\ldots,14$. The findings are Atelectasis, Cardiomegaly, Effusion, Infiltration, Mass, Nodule, Pneumonia, Pneumothorax, Consolidation, Edema, Emphysema, Fibrosis, Pleural Thickening, and Hernia.
+
+\subsection{Representation Dimensions and Token Interactions}
+
+The image, text, and metadata branches produce vectors of equal width, but use different encoders. The image representation summarizes visual patches extracted by the pretrained vision backbone. The text representation is derived from the first language-model output token, and its learned projection accommodates the width mismatch between the language encoder and the fusion network. The metadata branch uses two affine mappings separated by GELU and dropout to learn nonlinear interactions among the six structured fields.
+
+Within the fusion encoder, every query token can attend to the classification token and the three modality tokens. With eight heads and model width 512, each attention head operates on a 64-dimensional key space. The two-layer stack permits the learned classification token to aggregate information after intermediate modality interactions. Because the sequence has only four tokens, this attention describes interactions among pooled modalities rather than localization among individual anatomical patches. Residual connections and layer normalization support stable information flow through the encoder.
+
+The sigmoid prediction head differs from a softmax classifier. A softmax distribution forces class probabilities to sum to one and is unsuitable when multiple abnormalities can coexist. Independent sigmoid scores instead represent fourteen binary outputs. Their values should be interpreted as model scores until class-specific calibration and an appropriate operating threshold have been established. Selecting the largest score does not imply that the remaining findings are absent.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.91\textwidth]{fig1_architecture.png}
+\caption{Overview of the X-Fusion tri-modal architecture. The diagram is schematic. Visual attribution is based on attention rather than a validated disease-specific localization method.}
+\label{fig:architecture}
+\end{figure}
+
+\subsection{Optimization Objectives}
+
+Let $p_{ik}$ be the predicted probability for finding $k$ in sample $i$, and $y_{ik}\in\{0,1\}$ its label. Define $q_{ik}=\min(1-p_{ik}+0.05,1)$. With $\epsilon=10^{-8}$, the per-label Asymmetric Loss term is
+
+\begin{multline}
+\ell_{ik}=
+-y_{ik}(1-p_{ik})
+\log(\max(p_{ik},\epsilon))\\
+-(1-y_{ik})(1-q_{ik})^4
+\log(\max(q_{ik},\epsilon)).
+\end{multline}
+
+The classification loss is $\mathcal{L}_{\mathrm{ASL}}=B^{-1}\sum_{i=1}^{B}\sum_{k=1}^{14}\ell_{ik}$. For normalized image and text features $v_i,t_j$, similarity is $C_{ij}=v_i^\top t_j/\tau$, where $\tau=0.07$. Symmetric contrastive alignment uses
+
+\begin{align}
+\mathcal{L}_{\mathrm{NCE}}
+&=\tfrac{1}{2}
+[\operatorname{CE}(C,a)+
+\operatorname{CE}(C^\top,a)],\\
+\mathcal{L}_{\mathrm{train}}
+&=\mathcal{L}_{\mathrm{ASL}}
++0.1\mathcal{L}_{\mathrm{NCE}},
+\end{align}
+
+where $a$ contains matching image and text batch indices.
+
+\subsection{Loss Behavior and Class Imbalance}
+
+The positive and negative terms in the classification objective receive different focusing behavior. For positive labels, the factor $(1-p)$ emphasizes positives assigned low predicted probability. For negatives, the clipped complement $q$ and fourth-power focusing term reduce the contribution of easy negative examples. Here $p_{ik}$ is the predicted score and $y_{ik}$ is the binary target. The clipping margin of 0.05 reduces the effect of easy negatives, while $\epsilon$ prevents the logarithm of zero. Summing the per-label terms allows each radiograph to contribute multiple positive findings.
+
+Contrastive alignment is computed over paired image and note representations in the current minibatch. The similarity matrix $C$ contains scaled dot products between image and note features. Its diagonal represents matched pairs, while other entries act as negatives. The temperature $\tau=0.07$ controls how strongly the objective separates these pairs. This objective assumes that the provided note corresponds to its image. Because the current experiment constructs notes from target labels, the resulting alignment must not be interpreted as evidence that the model has learned to align independently collected radiology language with radiographic findings.
+
+The combined objective gives contrastive alignment one tenth of the classification-loss weight. This numerical weighting specifies the optimization objective but does not establish equal influence on gradients because the losses may have different scales. The recorded training and validation losses are therefore discussed separately rather than used as directly comparable estimates of generalization.
+
+\section{Dataset and Experimental Setup}
+
+\subsection{Data Partitioning}
+
+The local study subset contains 31,630 images matched to metadata, drawn from 31,877 available PNG files. The full NIH release includes 112,120 radiographs \cite{nihdataset}. Training and validation images are selected from the official train and validation list, with patient IDs shuffled using seed 42 and 10\% of patients reserved for validation. Test images follow the official test list. The partitions contain no overlapping patient IDs.
+
+Images are resized to $224\times224$ pixels, converted to RGB, and normalized using channel means $(0.485,0.456,0.406)$ and standard deviations $(0.229,0.224,0.225)$. Training augmentation includes horizontal flips, rotations up to $10^\circ$, and brightness and contrast jitter of 0.15. Validation and test preprocessing is deterministic. The fourteen findings are nonexclusive. ``No Finding'' is represented by an all-zero target vector.
+
+\begin{table}[htbp]
+\caption{Dataset partitions}
+\label{tab:split}
+\centering\small
+\begin{tabular}{lrr}
+\toprule
+Partition & Images & Patients\\
+\midrule
+Training & 21,964 & 9,939\\
+Validation & 2,566 & 1,104\\
+Test & 7,100 & 1,137\\
+\midrule
+Total & 31,630 & 12,180\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\caption{Positive-label counts by partition}
+\label{tab:prevalence}
+\centering\small
+\begin{tabular}{lrrr}
+\toprule
+Finding & Train & Validation & Test\\
+\midrule
+Atelectasis & 3237 & 367 & 879\\
+Cardiomegaly & 723 & 107 & 387\\
+Effusion & 2687 & 329 & 1270\\
+Infiltration & 3629 & 433 & 1128\\
+Mass & 1600 & 164 & 476\\
+Nodule & 2111 & 226 & 476\\
+Pneumonia & 42 & 5 & 18\\
+Pneumothorax & 1148 & 131 & 1024\\
+Consolidation & 132 & 11 & 62\\
+Edema & 395 & 43 & 262\\
+Emphysema & 557 & 70 & 335\\
+Fibrosis & 558 & 57 & 190\\
+Pleural Thickening & 787 & 94 & 348\\
+Hernia & 63 & 8 & 49\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Auxiliary Inputs and Training}
+
+Age and sex come from image metadata. In the available experiment, clinical-note templates and sampled vital signs are conditioned on disease labels. This creates a dependency between auxiliary inputs and the target and is important when interpreting predictive metrics. Training uses AdamW, cosine annealing, a learning rate of $2\times10^{-4}$, weight decay of $10^{-4}$, batch size 4, gradient accumulation over eight batches, requested 16-bit mixed precision, and a frozen text encoder. The available checkpoint is from epoch 14 of a 15-epoch configuration.
+
+\subsection{Partition Characteristics and Reproducibility}
+
+The local subset contains part of the full ChestX-ray14 release. Its 31,630 radiographs are divided into 21,964 training, 2,566 validation, and 7,100 test images. The patient counts are 9,939, 1,104, and 1,137 respectively. These counts matter because multiple images can originate from one patient. Image-level random partitioning could otherwise place correlated observations in more than one split. Patient-disjoint partitioning addresses this overlap risk.
+
+The positive-label table shows substantial differences in prevalence. For example, the training partition contains 3,629 Infiltration positives but only 42 Pneumonia positives and 63 Hernia positives. A single global accuracy value would obscure these differences. Macro AUROC assigns equal weight to label-specific AUROC values, while micro AUROC pools decisions across labels. Mean average precision summarizes precision and recall ranking behavior and is particularly informative when positive labels are sparse. Hamming loss counts individual label errors, whereas subset accuracy requires the entire fourteen-label prediction vector to match.
+
+The class counts also limit the precision of estimates for rare findings. The test partition contains 18 Pneumonia positives and 49 Hernia positives. Threshold-specific precision and recall can change appreciably when only a few positive cases are reclassified. Confidence intervals and patient-level resampling would therefore be valuable additions to a subsequent evaluation. No such intervals are inferred from the aggregate numbers reported here.
+
+For reproducibility, a complete evaluation package would identify the exact image list, patient partition, checkpoint, preprocessing configuration, auxiliary-input generation procedure, and prediction scores for every label and test sample. The supplied material supports the partition and configuration description but does not provide the prediction-level evidence needed to reproduce the draft's comparative tables.
+
+\section{Results and Discussion}
+
+\subsection{Optimization Records}
+
+Fourteen logged epochs show training objective decreasing from 0.1545 to 0.1190 (22.95\% relative reduction) and validation ASL from 0.0207 to 0.0007. Training includes ASL and contrastive regularization, while validation records ASL alone. The magnitudes are therefore not directly comparable. These curves document optimization behavior rather than independent clinical discrimination.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{fig2_losses.jpg}
+\caption{Saved X-Fusion optimization traces for fourteen logged epochs. Training includes ASL and InfoNCE, while validation includes ASL only. The two scales are not directly comparable.}
+\label{fig:losses}
+\end{figure}
+
+\begin{table}[htbp]
+\caption{Recorded training-loss endpoints}
+\label{tab:losses}
+\centering\small
+\begin{tabular}{lrr}
+\toprule
+Quantity & First & Last\\
+\midrule
+Train: ASL + 0.1 InfoNCE & 0.1545 & 0.1190\\
+Validation: ASL & 0.0207 & 0.0007\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\caption{Comparative metrics reported in the accompanying study draft}
+\label{tab:overall}
+\centering\small
+\begin{tabular}{lrrr}
+\toprule
+Model & Macro AUROC & Micro AUROC & mAP\\
+\midrule
+Vision only & 0.8162 & 0.8740 & 0.7420\\
+Vision + text & 0.8870 & 0.9215 & 0.8250\\
+X-Fusion & \textbf{0.9420} & \textbf{0.9615} & \textbf{0.8840}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Comparative Performance}
+
+Table~\ref{tab:overall} summarizes aggregate performance figures from the accompanying X-Fusion study draft. The listed macro AUROC increases from 0.8162 for vision only to 0.9420 for the tri-modal configuration, a difference of 0.1258. The reported differences describe the study draft. Prediction arrays and statistical test records are not available. The draft's ablation study (Table~\ref{tab:ablation}) attributes incremental improvements to text, metadata, and Transformer fusion. The Pneumonia threshold sweep (Table~\ref{tab:threshold}) identifies 0.35 as the highest-F1 threshold among the tabulated settings. Independent replication is needed to establish the magnitude and reliability of these differences.
+
+A separate saved repository evaluation for 7,100 test-list images records macro AUROC 1.0000, macro AUPRC 0.9953, and macro F1 0.9709. Because these results involve label-conditioned auxiliary inputs, they are treated as a pipeline diagnostic rather than evidence of diagnostic superiority.
+
+\begin{table}[htbp]
+\caption{Modality ablation reported in the accompanying study draft}
+\label{tab:ablation}
+\centering\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{lrrrr}
+\toprule
+Configuration & Macro AUROC & mAP & Hamming & Subset acc.\\
+\midrule
+Vision only & 0.8162 & 0.7420 & 0.0840 & 0.6120\\
+Vision + metadata & 0.8540 & 0.7890 & 0.0710 & 0.6780\\
+Vision + text & 0.8870 & 0.8250 & 0.0580 & 0.7340\\
+Tri-modal concat. & 0.9020 & 0.8410 & 0.0490 & 0.7680\\
+X-Fusion & \textbf{0.9420} & \textbf{0.8840} & \textbf{0.0320} & \textbf{0.8420}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\caption{Pneumonia threshold sweep reported in the study draft}
+\label{tab:threshold}
+\centering\small
+\begin{tabular}{rrrr}
+\toprule
+Threshold & Precision & Recall & F1\\
+\midrule
+0.20 & 0.812 & 0.978 & 0.887\\
+0.30 & 0.885 & 0.951 & 0.917\\
+0.35 & 0.918 & 0.932 & \textbf{0.925}\\
+0.40 & 0.935 & 0.884 & 0.909\\
+0.50 & 0.961 & 0.810 & 0.879\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Reading the Comparative and Threshold Tables}
+
+The draft-reported results follow a consistent ordering across its listed configurations. Vision only has the lowest reported macro AUROC and mAP. Adding metadata or text produces higher tabulated values. Tri-modal concatenation is higher again, and Transformer fusion is highest. The reported Hamming loss falls from 0.0840 for vision only to 0.0320 for X-Fusion, while subset accuracy rises from 0.6120 to 0.8420. These draft-level comparisons motivate controlled, leakage-free ablations to isolate each component's contribution.
+
+The reported macro AUROC gain is 0.1258 in absolute AUROC units, equivalent to 12.58 percentage points. Expressed relative to the vision-only value of 0.8162, the increase is approximately 15.41\%. Distinguishing percentage-point change from relative percentage change avoids ambiguity when describing ablations. The same distinction applies to the reported mean average precision increase from 0.7420 to 0.8840.
+
+The Pneumonia threshold results show a precision and recall tradeoff. At 0.20, the draft reports recall 0.978 and precision 0.812. At 0.50, recall is 0.810 and precision is 0.961. Among the five listed thresholds, 0.35 has the highest reported F1 of 0.925. An operating threshold should be selected using independent validation data and a defined clinical objective. Screening and confirmatory applications may assign different costs to false negatives and false positives.
+
+\subsection{Explainability and Deployment}
+
+The interface overlays attention from the final visual Transformer block. Attention from the visual classification token is averaged across twelve heads, arranged into a $14\times14$ patch grid, and superimposed on the image. This is a visual attention display, not a validated lesion localization result. Kernel SHAP evaluates six metadata fields with image and text features fixed. Absolute contributions are aggregated across fourteen outputs and normalized. The zero-vector reference used by the current implementation limits clinical interpretation.
+
+The Next.js frontend connects to a FastAPI backend. Users can upload radiographs, enter notes and metadata, and view predicted findings with attribution maps. Missing metadata and text are replaced with configured defaults. The interface uses a display threshold of 0.30. This threshold has not been clinically calibrated.
+
+\subsection{Interpretability and Application Boundaries}
+
+The two explanation views answer different questions. The visual overlay indicates which spatial patch locations receive attention in the final visual Transformer block, after averaging over twelve heads. It can help users inspect model behavior, but attention weight is not a direct measure of causal influence on an individual disease logit. Without a localization benchmark, overlap with a suspected opacity cannot be treated as measured localization accuracy.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.45\textwidth]{fig3_cxr.png}
+\caption{Illustrative chest radiograph showing the type of input accepted by the prototype. No diagnosis or localization annotation is inferred from this image.}
+\label{fig:cxr}
+\end{figure}
+
+Metadata SHAP values quantify changes in model output under the chosen feature perturbation scheme and reference distribution. Aggregating absolute values across fourteen findings yields a relative importance display for a single evaluation context, but it discards whether a feature increases or decreases a particular finding score. The current all-zero reference can represent implausible vital sign combinations. A clinically representative background distribution and finding-specific signed attribution would improve interpretation.
+
+The web deployment connects a Next.js interface to a FastAPI inference service. The same prediction path can be exercised with images, notes, and structured fields, allowing the resulting outputs to be inspected together. The configured default note, fallback metadata values, and leading-finding score cutoff make the prototype usable when fields are missing. They do not constitute a validated missing-data strategy or a clinical triage protocol. The interface remains a research demonstration rather than a clinical decision system.
+
+\subsection{Study Scope and Limitations}
+
+The study uses patient-disjoint image partitions, which mitigate overlap between training and test patients. The auxiliary notes and vital signs are label-conditioned, however, so multimodal gains cannot yet be attributed to independently observed clinical context. The analysis also uses a subset of ChestX-ray14 and weak image-level annotations. The next evaluation will pair images with independent clinical information, archive per-case predictions, and examine calibration, external generalization, and explanation fidelity.
+
+\section{Conclusion and Future Work}
+
+X-Fusion integrates pretrained biomedical vision and language encoders with structured metadata through a compact Transformer for fourteen-label chest radiograph analysis. The implementation combines imbalance-aware classification, contrastive representation alignment, and an explanation-enabled application. Accompanying draft comparisons suggest a promising direction for multimodal fusion. Establishing generalizable benefits requires independently acquired auxiliary inputs and reproducible test predictions. Future work will focus on leakage-free multimodal cohorts, calibrated class-specific thresholds, and quantitative assessment of explanation fidelity.
+
+\backmatter
+
+\bmhead{Acknowledgements}
+
+The authors thank Keshav Memorial Institute of Technology for its academic support and the NIH Clinical Center for providing the ChestX-ray14 dataset.
+
+
+\begingroup
+\setlength{\bibsep}{0.65em}
+\bibliography{references}
+\endgroup
+\end{document}

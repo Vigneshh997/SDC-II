@@ -1,0 +1,59 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{cxrbert2022}
+Boecking, B., et~al.: Making the most of text semantics to improve biomedical
+  vision-language processing. In: Computer Vision--ECCV (2022)
+
+\bibitem{chefer2021}
+Chefer, H., Gur, S., Wolf, L.: Transformer interpretability beyond attention
+  visualization. In: Proceedings of CVPR. pp. 782--791 (2021)
+
+\bibitem{dosovitskiy2021}
+Dosovitskiy, A., et~al.: An image is worth 16x16 words: Transformers for image
+  recognition at scale. In: Proceedings of ICLR (2021)
+
+\bibitem{davit2025}
+Fu, M., Tantithamthavorn, C., Le, T.: {DAViT}: A domain-adapted vision
+  transformer for automated pneumonia detection and explanation using chest
+  {X-ray} images. IEEE Access  \textbf{13},  103033--103044 (2025)
+
+\bibitem{irvin2019}
+Irvin, J., et~al.: {CheXpert}: A large chest radiograph dataset with
+  uncertainty labels and expert comparison. In: Proceedings of AAAI. vol.~33,
+  pp. 590--597 (2019)
+
+\bibitem{lundberg2017}
+Lundberg, S.M., Lee, S.I.: A unified approach to interpreting model
+  predictions. In: Advances in Neural Information Processing Systems. vol.~30
+  (2017)
+
+\bibitem{nihdataset}
+{NIH Clinical Center}: {ChestX-ray14} dataset,
+  \url{https://nihcc.app.box.com/v/ChestXray-NIHCC}
+
+\bibitem{oord2018}
+van~den Oord, A., Li, Y., Vinyals, O.: Representation learning with contrastive
+  predictive coding (2018), arXiv:1807.03748
+
+\bibitem{ridnik2021}
+Ridnik, T., et~al.: Asymmetric loss for multi-label classification. In:
+  Proceedings of ICCV (2021)
+
+\bibitem{vaswani2017}
+Vaswani, A., et~al.: Attention is all you need. In: Advances in Neural
+  Information Processing Systems. vol.~30 (2017)
+
+\bibitem{wang2017}
+Wang, X., et~al.: {ChestX-ray8}: Hospital-scale chest {X-ray} database and
+  benchmarks on weakly-supervised classification and localization of common
+  thorax diseases. In: Proceedings of CVPR. pp. 2097--2106 (2017)
+
+\bibitem{biomedclip2023}
+Zhang, S., et~al.: {BiomedCLIP}: A multimodal biomedical foundation model
+  pretrained from fifteen million scientific image-text pairs (2023),
+  arXiv:2303.00915
+
+\end{thebibliography}

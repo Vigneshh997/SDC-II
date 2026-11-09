@@ -1,0 +1,34 @@
+{
+  "source": "Observed MIMIC-IV-ED Demo 2.2 clinical records",
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "observed_records_encoded": 8,
+  "metadata_fields": [
+    "sex",
+    "temperature",
+    "heart_rate",
+    "resp_rate",
+    "spo2"
+  ],
+  "encoded_metadata_width": 8,
+  "cxr_bert_token_feature_shape": [
+    8,
+    8,
+    768
+  ],
+  "metadata_mlp_feature_shape": [
+    8,
+    512
+  ],
+  "features_finite": true,
+  "patient_disjoint": true,
+  "normalizer_fit_scope": "Training component patients only",
+  "mlp_status": "Random initialization; forward validation only; no optimization or checkpoint saved",
+  "diagnostic_predictions_produced": false,
+  "trimodal_training_performed": false,
+  "missing": [
+    "Matching authorized X-rays",
+    "Reviewed study-time linkage",
+    "Compatible disease labels"
+  ]
+}

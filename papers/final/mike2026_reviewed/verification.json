@@ -1,0 +1,21 @@
+{
+  "pages": 10,
+  "paper_size": "A4",
+  "within_10_page_limit": true,
+  "anonymous_text_and_PDF_author_metadata": true,
+  "attention_equation_visually_checked": true,
+  "visual_backbone_heads": 12,
+  "fusion_heads": 8,
+  "per_disease_chart_recomputed_from_predictions": true,
+  "patient_cluster_bootstrap_resamples": 500,
+  "pneumonia_positive_images": 18,
+  "pneumonia_positive_patients": 12,
+  "all_pages_visually_checked": true,
+  "unresolved_citations_or_overfull_boxes": false,
+  "bibtex_warnings": false,
+  "new_encoder_or_fusion_training_performed": false,
+  "trimodal_clinical_validity_established": false,
+  "coauthors_private_record_excluded": true,
+  "permissions_and_author_declarations_require_confirmation": true,
+  "submitted": false
+}

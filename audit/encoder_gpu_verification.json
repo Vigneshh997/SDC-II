@@ -1,0 +1,41 @@
+{
+  "scope": "Artificial software fixtures only. Disposable untrained fusion. No genuine training or clinical evaluation.",
+  "torch": "2.14.0+cu130",
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "encoder_revisions": {
+    "biomedclip": "9f341de24bfb00180f1b847274256e9b65a3a32e",
+    "cxr_bert": "5157bdba1437a3aed316dacb1a5b68edf96b9902"
+  },
+  "logit_shape": [
+    2,
+    14
+  ],
+  "cnn_shape": [
+    2,
+    512,
+    14,
+    14
+  ],
+  "gradient_absolute_sums": {
+    "cnn": 2448.084671497345,
+    "text_projection": 213.27918326854706,
+    "metadata_mlp": 43.24642515182495,
+    "cross_attention": 1783.622676730156
+  },
+  "modality_logit_change": {
+    "image": 0.0014855563640594482,
+    "text": 0.09550577402114868,
+    "metadata": 0.04648524522781372
+  },
+  "explanation_status": {
+    "text": "available",
+    "metadata": "available"
+  },
+  "heatmap_generated": true,
+  "cross_modal_links": 16,
+  "load_seconds": 30.624788400000398,
+  "batch2_forward_seconds": 0.9525568999997631,
+  "single_explanation_seconds": 3.4400294000006397,
+  "peak_cuda_bytes": 1327502848
+}

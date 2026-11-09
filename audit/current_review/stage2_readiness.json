@@ -1,0 +1,19 @@
+{
+  "report_version": 1,
+  "scope": "Existing v2 structural preflight only; clinical validity is not certified.",
+  "manifest_present": false,
+  "provenance_review_present": false,
+  "manifest_sha256": null,
+  "provenance_review_sha256": null,
+  "existing_run_artifacts": [],
+  "structural_preflight_passed": false,
+  "clinical_validity": "not_certified",
+  "diagnostic_checkpoint_created": false,
+  "next_actions": [
+    "Acquire authorized, temporally aligned paired data; do not synthesize it.",
+    "Complete substantive source, timing, label and permitted-use review.",
+    "Review TRAINING_READINESS_REPORT.md and the strict loader; fix source data without relaxing validation."
+  ],
+  "preflight_error_type": "DatasetReadinessError",
+  "status": "blocked"
+}

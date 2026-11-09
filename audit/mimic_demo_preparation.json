@@ -1,0 +1,39 @@
+{
+  "source": "https://physionet.org/content/mimic-iv-ed-demo/2.2/",
+  "license": "Open Data Commons Open Database License v1.0",
+  "ed_stays": 222,
+  "triage_rows": 222,
+  "vital_sign_rows": 1038,
+  "source_patients": 64,
+  "staged_complete_rows": 193,
+  "staged_patients": 51,
+  "excluded_incomplete_or_invalid_rows": 29,
+  "exclusion_error_types": {
+    "ValueError": 29
+  },
+  "metadata_fields": [
+    "sex",
+    "temperature",
+    "heart_rate",
+    "resp_rate",
+    "spo2"
+  ],
+  "seed": 42,
+  "split_unit": "Patient; all ED stays of a patient remain together",
+  "component_split_rows": {
+    "train": 161,
+    "test": 25,
+    "val": 7
+  },
+  "component_split_patients": {
+    "train": 40,
+    "val": 5,
+    "test": 6
+  },
+  "raw_data_persisted": "backend\\data\\external\\mimic-iv-ed-demo-2.2",
+  "staging_sha256": "7cf992533fb71650869a3a552d3acff6a7eb4eded3edb492ae27c54a6a67dcc1",
+  "diagnostic_targets": "Not acquired or inferred",
+  "paired_xrays": 0,
+  "trimodal_training_ready": false,
+  "limitation": "Observed clinical components only. ED arrival time is not an exact measurement timestamp. Study-time linkage and matching X-rays remain unavailable."
+}

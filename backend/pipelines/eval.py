@@ -1,66 +1,58 @@
-# backend/pipelines/eval.py
-"""Evaluation script for the X-Fusion multimodal pneumonia model.
-
-Usage:
-    python -m backend.pipelines.eval --config config.yaml
-
-Loads the best checkpoint and runs full test-set evaluation,
-reporting accuracy, AUROC, confusion matrix, and per-class metrics.
-"""
+"""Explicit held-out evaluation, never called automatically during model selection."""
 
 import argparse
-import yaml
-import torch
-import pytorch_lightning as pl
+import hashlib
+import json
+import time
 from pathlib import Path
 
-from backend.models.multimodal_lit import MultimodalLitModel
-from backend.data.dataset import NIHChestXrayDataModule
+import torch
+
+from backend.checkpoint import load_model, read_checkpoint
+from backend.data.dataset import load_manifest, paired_loader
+from backend.data.validation import MetadataTransform
+from backend.pipelines.metrics import compute_metrics
+from backend.pipelines.train import collect
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Evaluate X-Fusion model")
-    parser.add_argument("--config", type=str, default="config.yaml")
-    parser.add_argument("--checkpoint", type=str, default=None,
-                        help="Override checkpoint path from config")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--checkpoint", required=True)
+    parser.add_argument("--manifest", required=True)
+    parser.add_argument("--device", choices=["cpu", "cuda"], default="cpu")
+    parser.add_argument("--output", default="outputs/xfusion_v2/test_metrics.json")
     args = parser.parse_args()
-
-    with open(args.config, "r") as f:
-        cfg = yaml.safe_load(f)
-
-    # Data
-    dm = NIHChestXrayDataModule(
-        data_root=cfg.get("data_root", "./backend/data/nih_cxr14"),
-        batch_size=cfg.get("batch_size", 16),
-        num_workers=cfg.get("num_workers", 4),
+    checkpoint = read_checkpoint(args.checkpoint)
+    digest = hashlib.sha256(Path(args.manifest).read_bytes()).hexdigest()
+    if digest != checkpoint["manifest_sha256"]:
+        raise ValueError("Evaluation manifest differs from recorded dataset/splits")
+    metadata = MetadataTransform(checkpoint["model_config"].get("metadata_fields", ["age", "sex"]))
+    rows = load_manifest(args.manifest, metadata)
+    model, checkpoint = load_model(args.checkpoint, args.device)
+    loader = paired_loader([r for r in rows if r["split"] == "test"], model.vision_preprocess, metadata, 4)
+    if args.device == "cuda":
+        torch.cuda.reset_peak_memory_stats()
+        torch.cuda.synchronize()
+    start = time.perf_counter()
+    targets, probabilities, loss = collect(model, loader, args.device)
+    if args.device == "cuda":
+        torch.cuda.synchronize()
+    elapsed = time.perf_counter() - start
+    result = compute_metrics(targets, probabilities, checkpoint["thresholds"])
+    result.update(
+        {
+            "test_asl": loss,
+            "manifest_sha256": digest,
+            "pipeline_seconds": elapsed,
+            "pipeline_seconds_per_sample": elapsed / len(targets),
+            "peak_cuda_bytes": torch.cuda.max_memory_allocated() if args.device == "cuda" else None,
+            "timing_scope": "Data loading, preprocessing and prediction; no explanations; no warmup.",
+        }
     )
-
-    # Load checkpoint
-    ckpt = args.checkpoint or cfg.get("checkpoint_path", "./checkpoints/last.ckpt")
-    ckpt_path = Path(ckpt)
-    if not ckpt_path.exists():
-        print(f"ERROR: checkpoint not found at {ckpt_path}")
-        print("  Run training first: python -m backend.pipelines.train --config config.yaml")
-        return
-
-    print(f"Loading checkpoint: {ckpt_path}")
-    lit_model = MultimodalLitModel.load_from_checkpoint(str(ckpt_path))
-
-    # Trainer
-    accelerator = "gpu" if torch.cuda.is_available() else "cpu"
-    configured_precision = cfg.get("precision", "16-mixed")
-    precision = configured_precision if accelerator == "gpu" else "32-true"
-    trainer = pl.Trainer(
-        accelerator=accelerator,
-        devices=1,
-        precision=precision,
-    )
-
-    print("\n--- Test Evaluation ---")
-    results = trainer.test(lit_model, dm)
-    print("\nResults:")
-    for k, v in results[0].items():
-        print(f"  {k}: {v:.4f}")
+    output = Path(args.output)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(result, indent=2, allow_nan=False))
+    print(json.dumps(result, indent=2, allow_nan=False))
 
 
 if __name__ == "__main__":

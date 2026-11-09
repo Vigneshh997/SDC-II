@@ -1,0 +1,18 @@
+{
+  "api_health_http": 200,
+  "api_health": {
+    "status": "not_ready",
+    "device": null,
+    "reason": "No compatible trained checkpoint configured; genuine paired training is required.",
+    "disclaimer": "Research prototype only. Not clinically validated or approved for diagnosis or treatment."
+  },
+  "schema_http": 200,
+  "metadata_fields": [
+    "age",
+    "sex"
+  ],
+  "frontend_http": 200,
+  "frontend_research_disclaimer_present": true,
+  "frontend_title_present": true,
+  "browser_visual_inspection": "Unavailable: CUA kernel asset initialization failed. HTTP/source/build checks only."
+}

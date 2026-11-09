@@ -1,449 +1,262 @@
-# backend/models/multimodal.py
-"""Multimodal model for X-Fusion pneumonia detection.
+"""Strict tri-modal X-Fusion. No fallback encoders or inferred patient inputs.
 
-Architecture (matching DAViT base paper):
-- Vision encoder : BiomedCLIP ViT-B/16 (via open_clip, pre-trained on PMC-15M).
-- Text encoder  : CXR-BERT (microsoft/BiomedVLP-CXR-BERT-specialized).
-- Metadata encoder: 2-layer MLP for structured patient data.
-- Fusion        : Learnable [CLS] + cross-attention transformer over all tokens.
-- Heads         : Multi-disease classification (14 classes).
-- Explainability: GradCAM on the last vision-transformer block.
-
-All heavy pre-trained weights are frozen by default; only the projection
-layers, fusion module, and classification heads are trained, keeping
-GPU memory < 6 GB on an RTX 4060 with fp16.
+The official BiomedCLIP spatial patch tokens feed two 3x3 convolutions.
+CXR-BERT's actual BERT backbone supplies token features (its unused MLM and
+sentence projection heads are discarded). New shared projections are trained.
 """
 
+import json
+import math
+from dataclasses import dataclass
+
 import torch
-import torch.nn as nn
-from torch.nn import TransformerEncoder, TransformerEncoderLayer
-from typing import Dict, Any, Optional
-import numpy as np
+from torch import nn
 
-import open_clip
-from transformers import AutoModel, AutoTokenizer
+from backend.config import BIOMEDCLIP_ID, BIOMEDCLIP_REVISION, CXR_BERT_ID, CXR_BERT_REVISION
+from backend.data.validation import MetadataTransform, validate_note
+from backend.data.preprocessing import ImagePreprocessing
 
-
-# ---------------------------------------------------------------------------
-# Sub-modules
-# ---------------------------------------------------------------------------
 
 class MetadataEncoder(nn.Module):
-    """Small MLP that projects structured patient metadata to d_model."""
-
-    def __init__(self, input_dim: int = 6, hidden_dim: int = 128, output_dim: int = 512):
+    def __init__(self, input_dim=5, hidden_dim=128, output_dim=512):
         super().__init__()
         self.net = nn.Sequential(
             nn.Linear(input_dim, hidden_dim),
             nn.GELU(),
-            nn.Dropout(0.1),
             nn.Linear(hidden_dim, output_dim),
-            nn.GELU(),
+            nn.LayerNorm(output_dim),
         )
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return self.net(x)
+    def forward(self, values):
+        return self.net(values)
+
+
+class CrossAttentionBlock(nn.Module):
+    def __init__(self, dimension, heads):
+        super().__init__()
+        self.attention = nn.ModuleList(
+            [nn.MultiheadAttention(dimension, heads, batch_first=True) for _ in range(3)]
+        )
+        self.norm1 = nn.ModuleList([nn.LayerNorm(dimension) for _ in range(3)])
+        self.norm2 = nn.ModuleList([nn.LayerNorm(dimension) for _ in range(3)])
+        self.ffn = nn.ModuleList(
+            [
+                nn.Sequential(
+                    nn.Linear(dimension, dimension * 4), nn.GELU(), nn.Linear(dimension * 4, dimension)
+                )
+                for _ in range(3)
+            ]
+        )
+
+    def forward(self, tokens, masks, explain=False):
+        updated, weights = [], {}
+        for index in range(3):
+            others = [j for j in range(3) if j != index]
+            # Q is exclusively the receiving modality. K/V exclusively the other two.
+            context = torch.cat([tokens[j] for j in others], dim=1)
+            context_mask = torch.cat([masks[j] for j in others], dim=1)
+            attended, weight = self.attention[index](
+                tokens[index],
+                context,
+                context,
+                key_padding_mask=context_mask,
+                need_weights=explain,
+                average_attn_weights=False,
+            )
+            value = self.norm1[index](tokens[index] + attended)
+            updated.append(self.norm2[index](value + self.ffn[index](value)))
+            if explain:
+                weights[str(index)] = weight
+        return updated, weights
 
 
 class CrossAttentionFusion(nn.Module):
-    """Transformer encoder that fuses [CLS] + vision + text + meta tokens."""
-
-    def __init__(self, d_model: int = 512, nhead: int = 8, num_layers: int = 2):
+    def __init__(self, d_model=512, nhead=8, num_layers=2):
         super().__init__()
-        encoder_layer = TransformerEncoderLayer(
-            d_model=d_model,
-            nhead=nhead,
-            dim_feedforward=2048,
-            dropout=0.1,
-            activation="gelu",
-            batch_first=True,
-        )
-        self.transformer = TransformerEncoder(encoder_layer, num_layers=num_layers)
-        self.cls_token = nn.Parameter(torch.randn(1, 1, d_model))
+        self.modality_ids = nn.Parameter(torch.randn(3, d_model) * 0.02)
+        self.layers = nn.ModuleList([CrossAttentionBlock(d_model, nhead) for _ in range(num_layers)])
+        if num_layers < 1:
+            raise ValueError("At least one cross-attention layer is required")
 
-    def forward(
-        self,
-        vision_feat: torch.Tensor,
-        text_feat: torch.Tensor,
-        meta_feat: torch.Tensor,
-    ) -> torch.Tensor:
-        B = vision_feat.size(0)
-        cls = self.cls_token.expand(B, -1, -1)
-        tokens = torch.cat([cls, vision_feat, text_feat, meta_feat], dim=1)
-        fused = self.transformer(tokens)
-        return fused[:, 0, :]  # CLS output
+    def forward(self, vision, text, metadata, text_mask=None, explain=False):
+        tokens = [vision, text, metadata]
+        if any(
+            t.ndim != 3 or t.shape[0] != vision.shape[0] or t.shape[-1] != vision.shape[-1] for t in tokens
+        ):
+            raise ValueError("Three compatible token sequences required")
+        masks = [torch.zeros(t.shape[:2], dtype=torch.bool, device=t.device) for t in tokens]
+        if text_mask is not None:
+            masks[1] = ~text_mask.bool()
+        if any(m.all(1).any() for m in masks):
+            raise ValueError("Each modality must contain an unmasked token")
+        tokens = [t + self.modality_ids[i] for i, t in enumerate(tokens)]
+        weights = {}
+        for layer in self.layers:
+            tokens, weights = layer(tokens, masks, explain)
+        pooled = [masked_mean(t, ~m) for t, m in zip(tokens, masks)]
+        return torch.stack(pooled).mean(0), weights
 
 
-# ---------------------------------------------------------------------------
-# Main model
-# ---------------------------------------------------------------------------
+def masked_mean(tokens, mask):
+    return (tokens * mask.unsqueeze(-1)).sum(1) / mask.sum(1, keepdim=True).clamp_min(1)
+
+
+def load_pretrained_encoders(local_files_only=False):
+    """Pinned authentic weights; reject missing files instead of substituting."""
+    import open_clip
+    from huggingface_hub import hf_hub_download
+    from pathlib import Path
+    from safetensors.torch import load_file
+    from transformers import BertConfig, BertModel, BertTokenizerFast
+
+    config_file = hf_hub_download(
+        BIOMEDCLIP_ID,
+        "open_clip_config.json",
+        revision=BIOMEDCLIP_REVISION,
+        local_files_only=local_files_only,
+    )
+    hf_hub_download(
+        BIOMEDCLIP_ID,
+        "open_clip_pytorch_model.bin",
+        revision=BIOMEDCLIP_REVISION,
+        local_files_only=local_files_only,
+    )
+    clip, train_preprocess, preprocess = open_clip.create_model_and_transforms(
+        f"local-dir:{Path(config_file).parent}"
+    )
+    # Only the visual tower is retained. Its pretrained projection is not used by the patch adapter.
+    visual = clip.visual
+    del clip
+    text_config_path = hf_hub_download(
+        CXR_BERT_ID, "config.json", revision=CXR_BERT_REVISION, local_files_only=local_files_only
+    )
+    text_weights = hf_hub_download(
+        CXR_BERT_ID, "model.safetensors", revision=CXR_BERT_REVISION, local_files_only=local_files_only
+    )
+    config = BertConfig.from_dict(json.loads(Path(text_config_path).read_text()))
+    text = BertModel(config, add_pooling_layer=False)
+    state = load_file(text_weights)
+    backbone = {k.removeprefix("bert."): v for k, v in state.items() if k.startswith("bert.")}
+    # Older Transformers persisted this deterministic buffer; current BERT does not.
+    positions = backbone.pop("embeddings.position_ids", None)
+    if positions is not None and not torch.equal(
+        positions, torch.arange(config.max_position_embeddings).unsqueeze(0)
+    ):
+        raise ValueError("Unexpected CXR-BERT position buffer")
+    text.load_state_dict(backbone, strict=True)
+    tokenizer = BertTokenizerFast.from_pretrained(
+        CXR_BERT_ID, revision=CXR_BERT_REVISION, local_files_only=local_files_only
+    )
+    return visual, text, tokenizer, train_preprocess, preprocess
+
+
+@dataclass
+class FusionOutput:
+    logits: torch.Tensor
+    image: torch.Tensor
+    text: torch.Tensor
+    metadata: torch.Tensor
+    spatial: torch.Tensor
+    attention: dict
+
 
 class MultimodalModel(nn.Module):
-    """End-to-end multimodal model for chest-X-ray pneumonia detection."""
-
-    # We use 512 as our internal dim to match BiomedCLIP output (512-d).
-    D_MODEL = 512
-
     def __init__(
         self,
-        meta_input_dim: int = 6,
-        freeze_vision: bool = True,
-        freeze_text: bool = True,
+        metadata_fields=("age", "sex"),
+        d_model=512,
+        nhead=8,
+        num_layers=2,
+        freeze_vision=True,
+        freeze_text=True,
+        local_files_only=False,
+        encoders=None,
+        clahe=False,
     ):
         super().__init__()
-
-        # ---- Vision encoder (BiomedCLIP ViT-B/16) ----
-        self.vision_model, _, self.vision_preprocess = (
-            open_clip.create_model_and_transforms(
-                "hf-hub:microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224"
-            )
+        # Encoder injection is for isolated software tests only, never a runtime fallback.
+        if encoders is None:
+            encoders = load_pretrained_encoders(local_files_only)
+        (
+            self.vision_model,
+            self.text_encoder,
+            self.tokenizer,
+            self.train_preprocess,
+            self.vision_preprocess,
+        ) = encoders
+        self.train_preprocess = ImagePreprocessing(self.train_preprocess, clahe)
+        self.vision_preprocess = ImagePreprocessing(self.vision_preprocess, clahe)
+        self.metadata_transform = MetadataTransform(metadata_fields)
+        self.freeze_vision, self.freeze_text = freeze_vision, freeze_text
+        for module, frozen in ((self.vision_model, freeze_vision), (self.text_encoder, freeze_text)):
+            if frozen:
+                module.requires_grad_(False)
+                module.eval()
+        channels = self.vision_model.trunk.num_features
+        self.cnn_refinement = nn.Sequential(
+            nn.Conv2d(channels, d_model, 3, padding=1),
+            nn.GELU(),
+            nn.Conv2d(d_model, d_model, 3, padding=1),
+            nn.GELU(),
         )
-        # We only need the visual half; discard the text tower from open_clip.
-        # BiomedCLIP ViT-B/16 outputs 512-d embeddings.
-        if freeze_vision:
-            for p in self.vision_model.parameters():
-                p.requires_grad = False
-
-        # ---- Text encoder (CXR-BERT) ----
-        self.text_encoder = AutoModel.from_pretrained(
-            "microsoft/BiomedVLP-CXR-BERT-specialized",
-            trust_remote_code=True,
-        )
-        self.tokenizer = AutoTokenizer.from_pretrained(
-            "microsoft/BiomedVLP-CXR-BERT-specialized",
-            trust_remote_code=True,
-        )
-        cxr_bert_dim = self.text_encoder.config.hidden_size  # typically 768
-        self.text_proj = nn.Linear(cxr_bert_dim, self.D_MODEL)
-
-        if freeze_text:
-            for p in self.text_encoder.parameters():
-                p.requires_grad = False
-
-        # ---- Metadata encoder ----
-        self.meta_encoder = MetadataEncoder(
-            input_dim=meta_input_dim, output_dim=self.D_MODEL
-        )
-
-        # ---- Fusion ----
-        self.fusion = CrossAttentionFusion(
-            d_model=self.D_MODEL, nhead=8, num_layers=2
-        )
-
-        # ---- Classification heads ----
+        self.image_proj = nn.Linear(d_model, d_model)
+        self.text_proj = nn.Linear(self.text_encoder.config.hidden_size, d_model)
+        self.meta_encoder = MetadataEncoder(len(self.metadata_transform.names), output_dim=d_model)
+        self.fusion = CrossAttentionFusion(d_model, nhead, num_layers)
         self.multi_disease_head = nn.Sequential(
-            nn.Dropout(0.3),
-            nn.Linear(self.D_MODEL, 14),
+            nn.Linear(d_model, d_model), nn.GELU(), nn.Dropout(0.1), nn.Linear(d_model, 14)
         )
 
-    # ----- helpers -----
+    def train(self, mode=True):
+        super().train(mode)
+        if self.freeze_vision:
+            self.vision_model.eval()
+        if self.freeze_text:
+            self.text_encoder.eval()
+        return self
 
-    def encode_image(self, image: torch.Tensor) -> torch.Tensor:
-        """Encode a batch of images via BiomedCLIP.
+    def encode_image(self, images):
+        features = self.vision_model.trunk.forward_features(images)
+        prefix = self.vision_model.trunk.num_prefix_tokens
+        patches = features[:, prefix:, :]
+        side = math.isqrt(patches.shape[1])
+        if side * side != patches.shape[1]:
+            raise ValueError("BiomedCLIP patch grid must be square")
+        spatial = patches.transpose(1, 2).reshape(images.shape[0], -1, side, side)
+        spatial = self.cnn_refinement(spatial)
+        return self.image_proj(spatial.flatten(2).transpose(1, 2)), spatial
 
-        Args:
-            image: (B, 3, 224, 224) normalised tensor.
-        Returns:
-            (B, 1, D_MODEL) vision features.
-        """
-        vision_requires_grad = any(
-            parameter.requires_grad for parameter in self.vision_model.parameters()
-        )
-        with torch.set_grad_enabled(vision_requires_grad):
-            feat = self.vision_model.encode_image(image)  # (B, 512)
-        return feat.unsqueeze(1)
+    def encode_text(self, texts):
+        notes = [validate_note(t) for t in texts]
+        encoded = self.tokenizer(notes, padding=True, truncation=True, max_length=256, return_tensors="pt")
+        device = next(self.parameters()).device
+        encoded = {key: value.to(device) for key, value in encoded.items()}
+        result = self.text_encoder(**encoded).last_hidden_state
+        return self.text_proj(result), encoded["attention_mask"]
 
-    def encode_text(self, texts: list[str]) -> torch.Tensor:
-        """Encode a list of clinical notes via CXR-BERT.
-
-        Returns:
-            (B, 1, D_MODEL) text features.
-        """
-        encoded = self.tokenizer(
-            texts,
-            padding=True,
-            truncation=True,
-            max_length=256,
-            return_tensors="pt",
-        )
-        device = next(self.text_encoder.parameters()).device
-        input_ids = encoded["input_ids"].to(device)
-        attention_mask = encoded["attention_mask"].to(device)
-
-        with torch.set_grad_enabled(
-            any(p.requires_grad for p in self.text_encoder.parameters())
+    def forward(self, image, clinical_text, metadata, explain=False):
+        if (
+            image is None
+            or metadata is None
+            or not clinical_text
+            or image.ndim != 4
+            or image.shape[1] != 3
+            or metadata.ndim != 2
+            or image.shape[0] != len(clinical_text)
+            or image.shape[0] != metadata.shape[0]
         ):
-            out = self.text_encoder(
-                input_ids=input_ids, attention_mask=attention_mask
-            )
-            cls_rep = out.last_hidden_state[:, 0, :]
-        projected = self.text_proj(cls_rep)
-        return projected.unsqueeze(1)
-
-    # ----- forward -----
-
-    def forward(
-        self,
-        image: torch.Tensor,
-        clinical_text: list[str],
-        metadata: torch.Tensor,
-    ):
-        """Forward pass.
-
-        Args:
-            image        : (B, 3, 224, 224)
-            clinical_text: list of B strings
-            metadata     : (B, meta_input_dim)
-        Returns:
-            logits       : (B, 14) multi-disease logits
-            vision_feat  : (B, 1, D) raw vision embeddings (for InfoNCE)
-            text_feat    : (B, 1, D) raw text embeddings (for InfoNCE)
-        """
-        vision_feat = self.encode_image(image)          # (B, 1, D)
-        text_feat = self.encode_text(clinical_text)     # (B, 1, D)
-        meta_feat = self.meta_encoder(metadata).unsqueeze(1)  # (B, 1, D)
-
-        fused = self.fusion(vision_feat, text_feat, meta_feat)  # (B, D)
-
-        logits = self.multi_disease_head(fused)  # (B, 14)
-        return logits, vision_feat, text_feat
-
-    # ----- inference helpers -----
-
-    def _parse_meta_dict(self, meta_dict: Dict[str, Any]) -> list[float]:
-        """Parse metadata dictionary with robust clinical physiological defaults."""
-        defaults = {
-            "age": 50.0,
-            "sex": 1.0,
-            "temperature": 37.0,
-            "heart_rate": 75.0,
-            "resp_rate": 16.0,
-            "spo2": 98.0,
-        }
-        meta_vals = []
-        for k in ["age", "sex", "temperature", "heart_rate", "resp_rate", "spo2"]:
-            raw = meta_dict.get(k, None) if meta_dict else None
-            if raw is None or raw == "":
-                val = defaults[k]
-            elif k == "sex":
-                if isinstance(raw, (int, float)) and raw in (0, 1):
-                    val = float(raw)
-                else:
-                    val = 1.0 if str(raw).lower() in ["male", "m", "1"] else 0.0
-            else:
-                try:
-                    val = float(raw)
-                    if val <= 0 and k != "sex":
-                        val = defaults[k]
-                except (ValueError, TypeError):
-                    val = defaults[k]
-            meta_vals.append(float(val))
-        return meta_vals
-
-    def infer(self, image_path: str, clinical_note: str, meta_dict: Dict[str, Any]):
-        """Single-sample inference returning probabilities for 14 diseases."""
-        self.eval()
-        device = next(self.parameters()).device
-
-        from torchvision import transforms
-        from PIL import Image
-
-        preprocess = transforms.Compose([
-            transforms.Resize((224, 224)),
-            transforms.ToTensor(),
-            transforms.Normalize(
-                mean=[0.485, 0.456, 0.406],
-                std=[0.229, 0.224, 0.225],
-            ),
-        ])
-
-        img = Image.open(image_path).convert("RGB")
-        img_tensor = preprocess(img).unsqueeze(0).to(device)
-
-        meta_vals = self._parse_meta_dict(meta_dict)
-        meta_tensor = torch.tensor([meta_vals], dtype=torch.float32, device=device)
-
-        if not clinical_note or clinical_note.strip() == "":
-            clinical_note = "No clinical notes provided. Routine chest radiograph."
-
-        with torch.no_grad():
-            logits, _, _ = self.forward(
-                img_tensor, [clinical_note], meta_tensor
-            )
-            probs = torch.sigmoid(logits)[0].cpu().tolist()
-
-        diseases = [
-            "Atelectasis", "Cardiomegaly", "Effusion", "Infiltration",
-            "Mass", "Nodule", "Pneumonia", "Pneumothorax",
-            "Consolidation", "Edema", "Emphysema", "Fibrosis",
-            "Pleural_Thickening", "Hernia"
-        ]
-
-        predictions = {disease: round(prob, 4) for disease, prob in zip(diseases, probs)}
-        
-        # Sort by probability descending
-        sorted_preds = dict(sorted(predictions.items(), key=lambda item: item[1], reverse=True))
-        top_disease, top_prob = next(iter(sorted_preds.items()))
-
-        # In multi-label clinical screening, pathology is flagged at calibrated clinical thresholds (>0.30)
-        has_finding = top_prob >= 0.30
-
-        return {
-            "predictions": sorted_preds,
-            "diagnosis": top_disease if has_finding else "Normal / No Finding",
-            "has_findings": has_finding,
-            "primary_finding": top_disease,
-            "primary_confidence": top_prob,
-        }
-
-    def get_xai_heatmap(self, image_path: str, clinical_note: str, meta_dict: Dict[str, Any]) -> str:
-        """Runs inference and generates a ViT-CAM (Attention) heatmap encoded as base64."""
-        import cv2
-        import numpy as np
-        import base64
-        from torchvision import transforms
-        from PIL import Image
-
-        self.eval()
-        device = next(self.parameters()).device
-
-        # 1. Setup a hook to capture the QKV matrix to calculate attention
-        attn_matrix = None
-        def qkv_hook(module, input, output):
-            nonlocal attn_matrix
-            # output is (B, N, 3*C)
-            B, N, _ = output.shape
-            C = output.shape[-1] // 3
-            num_heads = 12 # ViT-Base has 12 heads
-            
-            # Reshape to extract q, k
-            qkv = output.reshape(B, N, 3, num_heads, C // num_heads).permute(2, 0, 3, 1, 4)
-            q, k = qkv[0], qkv[1] # shape: (B, num_heads, N, head_dim)
-            
-            # Calculate attention matrix manually
-            scale = (C // num_heads) ** -0.5
-            attn = (q @ k.transpose(-2, -1)) * scale
-            attn = attn.softmax(dim=-1)
-            
-            attn_matrix = attn.detach().cpu()
-
-        # Hook the qkv layer of the final block's attention module
-        handle = self.vision_model.visual.trunk.blocks[-1].attn.qkv.register_forward_hook(qkv_hook)
-
-        # 2. Run forward pass
-        preprocess = transforms.Compose([
-            transforms.Resize((224, 224)),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-        ])
-
-        orig_img = cv2.imread(image_path)
-        orig_img = cv2.resize(orig_img, (224, 224))
-        
-        img = Image.open(image_path).convert("RGB")
-        img_tensor = preprocess(img).unsqueeze(0).to(device)
-
-        meta_vals = self._parse_meta_dict(meta_dict)
-        meta_tensor = torch.tensor([meta_vals], dtype=torch.float32, device=device)
-
-        if not clinical_note or clinical_note.strip() == "":
-            clinical_note = "No clinical notes provided. Routine chest radiograph."
-
-        with torch.no_grad():
-            self.forward(img_tensor, [clinical_note], meta_tensor)
-        
-        handle.remove()
-
-        # 3. Process attention matrix to generate heatmap
-        # attn_matrix shape: (1, NumHeads, 197, 197)
-        # We want how much the CLS token (index 0) attends to all patch tokens (index 1:)
-        cls_attn = attn_matrix[0, :, 0, 1:]  # (NumHeads, 196)
-        
-        # Average across all attention heads
-        saliency = cls_attn.mean(dim=0).numpy()  # (196,)
-        
-        # Normalize between 0 and 1
-        saliency = saliency - saliency.min()
-        saliency = saliency / (saliency.max() + 1e-8)
-
-        # Reshape to 14x14 grid (since 224/16 = 14)
-        grid_size = int(np.sqrt(saliency.shape[0]))
-        heatmap = saliency.reshape(grid_size, grid_size)
-
-        # Resize heatmap to match original image size
-        heatmap = cv2.resize(heatmap, (224, 224))
-        
-        # Convert to RGB color map (JET)
-        heatmap_colored = cv2.applyColorMap(np.uint8(255 * heatmap), cv2.COLORMAP_JET)
-
-        # Blend with original image
-        alpha = 0.5
-        overlay = cv2.addWeighted(heatmap_colored, alpha, orig_img, 1 - alpha, 0)
-
-        # Encode to Base64
-        _, buffer = cv2.imencode('.jpg', overlay)
-        base64_str = base64.b64encode(buffer).decode('utf-8')
-
-        return f"data:image/jpeg;base64,{base64_str}"
-
-    def get_shap_values(self, image_path: str, clinical_note: str, meta_dict: Dict[str, Any]) -> Dict[str, float]:
-        """Calculates SHAP feature attributions for the structured metadata."""
-        import shap
-        from torchvision import transforms
-        from PIL import Image
-
-        self.eval()
-        device = next(self.parameters()).device
-
-        preprocess = transforms.Compose([
-            transforms.Resize((224, 224)),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-        ])
-        img = Image.open(image_path).convert("RGB")
-        img_tensor = preprocess(img).unsqueeze(0).to(device)
-
-        meta_keys = ["age", "sex", "temperature", "heart_rate", "resp_rate", "spo2"]
-        meta_vals = self._parse_meta_dict(meta_dict)
-        meta_tensor = torch.tensor([meta_vals], dtype=torch.float32, device=device)
-
-        if not clinical_note or clinical_note.strip() == "":
-            clinical_note = "No clinical notes provided. Routine chest radiograph."
-
-        with torch.no_grad():
-            vision_feat = self.encode_image(img_tensor)
-            text_feat = self.encode_text([clinical_note])
-
-        def predict_meta(meta_numpy):
-            meta_t = torch.tensor(meta_numpy, dtype=torch.float32, device=device)
-            meta_f = self.meta_encoder(meta_t).unsqueeze(1)
-            B = len(meta_numpy)
-            fused = self.fusion(vision_feat.expand(B, -1, -1),
-                                text_feat.expand(B, -1, -1),
-                                meta_f)
-            logits = self.multi_disease_head(fused)
-            return torch.sigmoid(logits).detach().cpu().numpy()
-
-        background = np.zeros((1, 6))
-        
-        # Suppress shap warnings
-        import warnings
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore")
-            explainer = shap.KernelExplainer(predict_meta, background)
-            shap_values = explainer.shap_values(meta_tensor.detach().cpu().numpy())
-
-        # Combine absolute sum of attributions across all 14 disease classes
-        # shap_values is a list of 14 arrays, each of shape (1, 6)
-        # We aggregate the mean absolute attribution for each feature
-        if isinstance(shap_values, list):
-            aggregated_shap = np.sum(np.abs(np.array(shap_values)), axis=0)[0]
-        else:
-            # Depending on shap version, it might return a 3D array (1, 6, 14)
-            aggregated_shap = np.sum(np.abs(shap_values), axis=-1)[0]
-            
-        # Normalize to 0-1 for UI
-        if np.max(aggregated_shap) > 0:
-            aggregated_shap = aggregated_shap / np.sum(aggregated_shap)
-
-        return {k: round(float(v), 4) for k, v in zip(meta_keys, aggregated_shap)}
+            raise ValueError("Image, clinical notes and metadata from every examination are mandatory")
+        if not torch.isfinite(image).all():
+            raise ValueError("Image contains nonfinite values")
+        vision, spatial = self.encode_image(image)
+        text, mask = self.encode_text(clinical_text)
+        meta = self.meta_encoder(self.metadata_transform(metadata)).unsqueeze(1)
+        fused, attention = self.fusion(vision, text, meta, mask, explain)
+        return FusionOutput(
+            self.multi_disease_head(fused),
+            vision.mean(1),
+            masked_mean(text, mask),
+            meta[:, 0],
+            spatial,
+            attention,
+        )

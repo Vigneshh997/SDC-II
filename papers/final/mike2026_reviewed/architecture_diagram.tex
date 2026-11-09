@@ -1,0 +1,28 @@
+% Editable vector architecture diagram for X-Fusion; TikZ required.
+\begin{tikzpicture}[x=1cm,y=1cm,>=Stealth,
+ box/.style={draw=black!60,rounded corners=2pt,line width=.5pt,align=center,inner sep=4pt},
+ arrow/.style={->,line width=.75pt,draw=black!70},
+ label/.style={font=\scriptsize,align=center}]
+% Modality-specific encoders
+\node[box,fill=blue!7,minimum width=3.15cm,minimum height=1.18cm] (vis) at (1.7,4.1)
+ {\textbf{Chest radiograph}\\BiomedCLIP\\\scriptsize 512-d image features};
+\node[box,fill=teal!8,minimum width=3.15cm,minimum height=1.18cm] (txt) at (5.25,4.1)
+ {\textbf{Clinical note}\\CXR-BERT + projection\\\scriptsize 768 $\rightarrow$ 512-d};
+\node[box,fill=orange!10,minimum width=3.15cm,minimum height=1.18cm] (met) at (8.8,4.1)
+ {\textbf{Patient metadata}\\Six fields + MLP\\\scriptsize 6 $\rightarrow$ 128 $\rightarrow$ 512-d};
+% tokens
+\node[box,fill=blue!13,minimum width=2.0cm,minimum height=.48cm,font=\scriptsize] (vt) at (1.7,2.95) {Image token};
+\node[box,fill=teal!14,minimum width=2.0cm,minimum height=.48cm,font=\scriptsize] (tt) at (5.25,2.95) {Text token};
+\node[box,fill=orange!16,minimum width=2.0cm,minimum height=.48cm,font=\scriptsize] (mt) at (8.8,2.95) {Metadata token};
+\draw[arrow] (vis.south)--(vt.north);\draw[arrow] (txt.south)--(tt.north);\draw[arrow] (met.south)--(mt.north);
+% Fusion
+\node[box,fill=violet!7,minimum width=10.25cm,minimum height=1.02cm] (fusion) at (5.25,1.85)
+ {\textbf{Four-token Transformer fusion}\\\scriptsize Learned CLS + image + text + metadata $\mid$ 2 encoder layers, 8 heads, $d=512$};
+\draw[arrow] (vt.south) -- (vt.south |- fusion.north);
+\draw[arrow] (tt.south) -- (tt.south |- fusion.north);
+\draw[arrow] (mt.south) -- (mt.south |- fusion.north);
+\node[box,fill=gray!9,minimum width=7.1cm,minimum height=.65cm] (head) at (5.25,.62)
+ {\textbf{CLS representation} $\rightarrow$ dropout $\rightarrow$ linear head $\rightarrow$ 14 sigmoid scores};
+\draw[arrow] (fusion.south)--(head.north);
+\node[label,text=black!75] at (5.25,-.05) {Training: asymmetric classification loss + auxiliary image--text InfoNCE alignment};
+\end{tikzpicture}

@@ -1,0 +1,14 @@
+{
+  "pages": 12,
+  "tables": 6,
+  "figures": 3,
+  "references": 12,
+  "equation_and_table_content_unchanged": true,
+  "body_prose_unchanged": true,
+  "original_figure_sha256": {
+    "fig1_architecture.png": "c1d0751133b52c5b9524e262d1d7abc3d0355da5206a98bf0d67a08367609472",
+    "fig2_losses.jpg": "01183c0bcabe4752ff37593eec234f5b2175f12c57e03459d583aedfc5c47254",
+    "fig3_cxr.png": "826bd7d10fab68579a293da297d3c3dc7aceb0ff9d3b4e99bc49d49658240ec7"
+  },
+  "no_unresolved_references_or_overfull_boxes": true
+}

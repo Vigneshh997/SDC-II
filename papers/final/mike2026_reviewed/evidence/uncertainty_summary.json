@@ -1,0 +1,19 @@
+{
+  "method": "Percentile patient-cluster bootstrap; sample patients with replacement and retain all their image rows by multiplicity",
+  "resamples": 500,
+  "seed": 20261015,
+  "test_images": 7100,
+  "test_patients": 1137,
+  "macro_auroc_delta_combined_minus_pixels": 0.00268973702891373,
+  "macro_auroc_delta_lower95": -0.0018530480925872284,
+  "macro_auroc_delta_upper95": 0.00695164965910648,
+  "valid_macro_delta_resamples": 500,
+  "input_sha256": {
+    "image_pixels": "a4bd6cd3c59306ac359d40146a6088a17695cd11a6e27a2a46b135d7e75292e8",
+    "image_pixels_age_sex": "de59890b68b625c56e0e625f0691665e1a4eaa636b5970fd006b82fbfab61863"
+  },
+  "pneumonia_counts": {
+    "positive_images": 18,
+    "positive_patients": 12
+  }
+}

@@ -1,0 +1,11 @@
+# Training status
+
+**Valid X-Fusion training: not performed.** No paired patient dataset or provenance review is available. The default training preflight was executed and rejected the absent paired manifest before encoder loading. This is the intended readiness failure.
+
+`config.yaml` records the proposed experiment: seed 42, batch 4, 12 maximum epochs, AdamW at 1e-4, weight decay 1e-5, cosine scheduler, patience 5, gradient clipping 1.0, temperature 0.07, contrastive weight 0.1, frozen pretrained encoders, 512 shared dimensions, 8 heads and 2 fusion blocks. CLAHE is enabled. These hyperparameters are starting configurations, not validation-selected optima. CUDA mixed precision is enabled when a CUDA environment is used. Train/val/test memberships must be supplied explicitly in the manifest; there is no new random split of the existing leaking dataset.
+
+The pipeline records history, manifest/review fingerprints, configuration, strict state dict, optimizer, scheduler, scaler, epoch, step count, early-stopping state, random states, validation thresholds and observed training-only SHAP background. Checkpoint writes use a temporary file and atomic replacement. Resume rejects differing configuration, dataset or review hashes. Last/best checkpoints are separate. Testing is not triggered automatically during model selection.
+
+The 38-test suite ran the actual training-loop code for two epochs on temporary artificial software fixtures with injected small encoders, and checked checkpoint loading/resume. The authentic encoder GPU verifier performed one disposable artificial-input optimization step, then discarded the model. Neither run is genuine patient training or a releasable diagnostic model. No synthetic-data checkpoint was published or configured for the API.
+
+The preserved legacy checkpoint is 1,303,711,240 bytes. Safe inspection found epoch 14, global step 10,305, six metadata inputs, unfrozen vision, frozen text and 24 fusion self-attention keys. It has no v2 architecture identifier. Its original data code generated label-derived modalities. It is incompatible with the corrected model and is rejected for serving. Detailed inspection is in `checkpoint_inventory.json`.

@@ -1,0 +1,48 @@
+# Python environments and generated files
+.venv/
+.venv*/
+venv/
+**/venv/
+__pycache__/
+*.py[cod]
+
+# Downloaded datasets and trained model artifacts
+/backend/data/nih_cxr14/
+/backend/checkpoints/
+*.ckpt
+*.pt
+*.pth
+*.safetensors
+*.h5
+
+# Frontend dependencies and build output
+/frontend/node_modules/
+/frontend/.next/
+/frontend/out/
+/frontend/coverage/
+/frontend/.git/
+/frontend/AGENTS.md
+/frontend/CLAUDE.md
+
+# Generated training and application output
+/lightning_logs/
+/output/
+/outputs/
+/audit/baseline_source.zip
+/audit/baseline_git_diff.patch
+/backend/data/paired/
+*.tsbuildinfo
+
+# LaTeX build output
+*.aux
+*.fls
+*.fdb_latexmk
+*.log
+*.out
+*.synctex.gz
+
+# Generated PDF figure extraction and reference/template files
+/documents/pdf/figures_extracted/
+/documents/pdf/DAViT_A_*.pdf
+/RESEARCH_PAPER/DAViT_*.pdf
+/RESEARCH_PAPER/conference-template-a4.docx

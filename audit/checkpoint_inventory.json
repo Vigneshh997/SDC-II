@@ -1,0 +1,29 @@
+{
+  "filename": "laptop-advanced-best-epoch=14-val_loss=0.00.ckpt",
+  "bytes": 1303711240,
+  "keys": [
+    "epoch",
+    "global_step",
+    "pytorch-lightning_version",
+    "state_dict",
+    "loops",
+    "callbacks",
+    "optimizer_states",
+    "lr_schedulers",
+    "MixedPrecision",
+    "hparams_name",
+    "hyper_parameters"
+  ],
+  "epoch": 14,
+  "global_step": 10305,
+  "hyper_parameters": {
+    "lr": 0.0002,
+    "weight_decay": 0.0001,
+    "meta_input_dim": 6,
+    "freeze_vision": false,
+    "freeze_text": true
+  },
+  "architecture_version": null,
+  "legacy_self_attention_keys": 24,
+  "status": "Legacy architecture and label-derived training pipeline; excluded from valid tri-modal inference"
+}

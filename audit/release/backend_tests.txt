@@ -1,0 +1,12 @@
+{"epoch": 1, "train_asl": 2.525756359100342, "train_infonce": 1.6280633211135864, "val_asl": 0.46631067991256714}
+{"epoch": 2, "train_asl": 2.520369529724121, "train_infonce": 1.5824426412582397, "val_asl": 0.4673157334327698}
+{
+  "tests_run": 38,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "elapsed_seconds": 18.183309400003054,
+  "scope": "Artificial software fixtures, not genuine patient end-to-end validation."
+}
+C:\Users\rvign\Desktop\CSE-C-3rd yr\3 Project\.venv311\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa

@@ -16,12 +16,11 @@ download a subset by specifying --batches N (each batch is ~4 GB, ~10K images).
 
 import argparse
 import os
-import sys
 import tarfile
-import zipfile
 from pathlib import Path
-from urllib.request import urlretrieve
 from urllib.error import URLError
+from urllib.parse import urlparse
+import requests
 
 from tqdm import tqdm
 
@@ -31,7 +30,7 @@ from tqdm import tqdm
 IMAGE_URLS = [
     "https://nihcc.box.com/shared/static/vfk49d74nhbxq3nqjg0900w5nvkorp5c.gz",  # images_001
     "https://nihcc.box.com/shared/static/i28rlmbvmfjbl8p2n3ril0pber4ta4ol.gz",  # images_002
-    "https://nihcc.box.com/shared/static/f1t00wrtdk94satdfb9olcolqx20telehl.gz", # images_003
+    "https://nihcc.box.com/shared/static/f1t00wrtdk94satdfb9olcolqx20telehl.gz",  # images_003
     "https://nihcc.box.com/shared/static/0aowwzs5lhjrceb3qp67ahp0rd1l1etg.gz",  # images_004
     "https://nihcc.box.com/shared/static/v5e3goj22zr6h8tzualxfsqlqaygfamk.gz",  # images_005
     "https://nihcc.box.com/shared/static/asi7ikud9jwnkrnkj99jnpfkjdes7l6l.gz",  # images_006
@@ -45,12 +44,17 @@ IMAGE_URLS = [
 
 # Metadata + split files (from HuggingFace mirror for reliability)
 METADATA_URL = "https://huggingface.co/datasets/alkzar90/NIH-Chest-X-ray-dataset/resolve/main/data/Data_Entry_2017_v2020.csv"
-TRAIN_VAL_LIST_URL = "https://huggingface.co/datasets/alkzar90/NIH-Chest-X-ray-dataset/resolve/main/data/train_val_list.txt"
-TEST_LIST_URL = "https://huggingface.co/datasets/alkzar90/NIH-Chest-X-ray-dataset/resolve/main/data/test_list.txt"
+TRAIN_VAL_LIST_URL = (
+    "https://huggingface.co/datasets/alkzar90/NIH-Chest-X-ray-dataset/resolve/main/data/train_val_list.txt"
+)
+TEST_LIST_URL = (
+    "https://huggingface.co/datasets/alkzar90/NIH-Chest-X-ray-dataset/resolve/main/data/test_list.txt"
+)
 
 
 class _DownloadProgressBar(tqdm):
     """tqdm wrapper for urlretrieve progress hook."""
+
     def update_to(self, b=1, bsize=1, tsize=None):
         if tsize is not None:
             self.total = tsize
@@ -63,10 +67,18 @@ def _download_file(url: str, dest: str, desc: str = ""):
         print(f"  [SKIP] {desc} already exists: {dest}")
         return
     print(f"  [DOWNLOAD] {desc} -> {dest}")
+    if urlparse(url).scheme != "https":
+        raise ValueError("Dataset downloads require HTTPS")
     try:
-        with _DownloadProgressBar(unit='B', unit_scale=True, miniters=1, desc=desc) as t:
-            urlretrieve(url, dest, reporthook=t.update_to)
-    except URLError as e:
+        with _DownloadProgressBar(unit="B", unit_scale=True, miniters=1, desc=desc) as t:
+            with requests.get(url, stream=True, timeout=60) as response:
+                response.raise_for_status()
+                t.total = int(response.headers.get("content-length", 0)) or None
+                with open(dest, "wb") as output:
+                    for block in response.iter_content(1024 * 1024):
+                        output.write(block)
+                        t.update(len(block))
+    except (URLError, requests.RequestException) as e:
         print(f"  [ERROR] Failed to download {url}: {e}")
         print(f"  Please download manually and place at: {dest}")
 
@@ -76,12 +88,12 @@ def _extract_archive(archive_path: str, extract_dir: str):
     print(f"  [EXTRACT] {archive_path} -> {extract_dir}")
     if archive_path.endswith(".tar.gz") or archive_path.endswith(".tgz"):
         with tarfile.open(archive_path, "r:gz") as tar:
-            tar.extractall(path=extract_dir)
+            tar.extractall(path=extract_dir, filter="data")
     elif archive_path.endswith(".gz"):
         # NIH files are actually tar.gz even with .gz extension
         try:
             with tarfile.open(archive_path, "r:gz") as tar:
-                tar.extractall(path=extract_dir)
+                tar.extractall(path=extract_dir, filter="data")
         except tarfile.ReadError:
             print(f"  [WARNING] Could not extract {archive_path} as tar.gz")
 
@@ -125,7 +137,7 @@ def download_nih_cxr14(output_dir: str, num_batches: int = 12):
     archives_dir.mkdir(exist_ok=True)
 
     for i in range(num_batches):
-        archive_name = f"images_{i+1:03d}.tar.gz"
+        archive_name = f"images_{i + 1:03d}.tar.gz"
         archive_path = str(archives_dir / archive_name)
 
         # Check if images from this batch are already extracted
@@ -138,7 +150,7 @@ def download_nih_cxr14(output_dir: str, num_batches: int = 12):
     # Count total images
     image_files = list(images_dir.glob("*.png"))
     print(f"\n{'=' * 60}")
-    print(f"  Download complete!")
+    print("  Download complete!")
     print(f"  Total images: {len(image_files)}")
     print(f"  Metadata:     {csv_dest}")
     print(f"  Location:     {output_path}")
@@ -148,15 +160,17 @@ def download_nih_cxr14(output_dir: str, num_batches: int = 12):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Download NIH ChestX-ray14 (research-grade benchmark)"
-    )
+    parser = argparse.ArgumentParser(description="Download NIH ChestX-ray14 (research-grade benchmark)")
     parser.add_argument(
-        "--output_dir", type=str, default="./data/nih_cxr14",
+        "--output_dir",
+        type=str,
+        default="./data/nih_cxr14",
         help="Root directory for dataset (default: ./data/nih_cxr14)",
     )
     parser.add_argument(
-        "--batches", type=int, default=2,
+        "--batches",
+        type=int,
+        default=2,
         help="Number of image batches to download, 1-12 (default: 2 = ~20K images)",
     )
     args = parser.parse_args()

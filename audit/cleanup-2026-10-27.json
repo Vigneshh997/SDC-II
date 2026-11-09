@@ -1,0 +1,1374 @@
+{
+  "date": "2026-10-27",
+  "recovery_archive": "C:\\Users\\rvign\\Desktop\\CSE-C-3rd yr\\3 Project\\backups\\cleanup-2026-10-27.zip",
+  "moved_files": [
+    {
+      "from": "architecture_and_workflow.md",
+      "to": "docs/architecture_and_workflow.md",
+      "sha256": "a78be087556ded74b8007271d58fa2365a8804175b712f92bf0e9432f1dd87ea"
+    },
+    {
+      "from": "cmt3.research.microsoft.com_MIKE2026_Track_1_Submission_Create.png",
+      "to": "papers/submission_records/cmt3.research.microsoft.com_MIKE2026_Track_1_Submission_Create.png",
+      "sha256": "7a3a51335420cf10f772486564e43b1ffc676312160d033717f2df7434604595"
+    },
+    {
+      "from": "Conference Management Toolkit - Submission Summary.pdf",
+      "to": "papers/submission_records/Conference Management Toolkit - Submission Summary.pdf",
+      "sha256": "5c66d6e9c929892ec8776ccf285111a3cd373951d4300eb054cb4d2d6889d189"
+    },
+    {
+      "from": "DAViT_A_Domain-Adapted_Vision_Transformer_for_Automated_Pneumonia_Detection_and_Explanation_Using_Chest_X-Ray_Images.pdf",
+      "to": "papers/references/DAViT_A_Domain-Adapted_Vision_Transformer_for_Automated_Pneumonia_Detection_and_Explanation_Using_Chest_X-Ray_Images.pdf",
+      "sha256": "c1f855825fe56558c6793e40b0ed6a8c36f1586510cc6b8e8bf6529499d609a3"
+    },
+    {
+      "from": "figures/architecture_diagram.png",
+      "to": "papers/project_figures/architecture_diagram.png",
+      "sha256": "30f45fce539ecab1ca72d1f186833c7797774ab6d12a479467c3d91d31b3dca2"
+    },
+    {
+      "from": "figures/fig1_architecture.png",
+      "to": "papers/project_figures/fig1_architecture.png",
+      "sha256": "c1d0751133b52c5b9524e262d1d7abc3d0355da5206a98bf0d67a08367609472"
+    },
+    {
+      "from": "figures/fig2_losses.jpg",
+      "to": "papers/project_figures/fig2_losses.jpg",
+      "sha256": "184f24508fa46ffa4320cde768d33d94db556757a1bd9031835759b839f96c41"
+    },
+    {
+      "from": "figures/fig3_cxr.png",
+      "to": "papers/project_figures/fig3_cxr.png",
+      "sha256": "826bd7d10fab68579a293da297d3c3dc7aceb0ff9d3b4e99bc49d49658240ec7"
+    },
+    {
+      "from": "figures/prc_curves.png",
+      "to": "papers/project_figures/prc_curves.png",
+      "sha256": "90d547859a39f69e9f1d0024ad29fb0fa5f9475877618968e50755b7bd67d039"
+    },
+    {
+      "from": "figures/roc_curves.png",
+      "to": "papers/project_figures/roc_curves.png",
+      "sha256": "4b44a5859047ad91d322cbb258cb0ab1b018640060660eb952a9e26991b7498e"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/architecture_diagram.tex",
+      "to": "papers/final/mike2026/architecture_diagram.tex",
+      "sha256": "35de1a995d54780d5df6ce5441f9663d4e40bc7efacdaa7b10c2ac1f1dfb329d"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/DescriptionTexts.txt",
+      "to": "papers/final/mike2026/DescriptionTexts.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/fig1_architecture.png",
+      "to": "papers/final/springer/fig1_architecture.png",
+      "sha256": "c1d0751133b52c5b9524e262d1d7abc3d0355da5206a98bf0d67a08367609472"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/fig2_losses.jpg",
+      "to": "papers/final/springer/fig2_losses.jpg",
+      "sha256": "01183c0bcabe4752ff37593eec234f5b2175f12c57e03459d583aedfc5c47254"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/fig3_cxr.png",
+      "to": "papers/final/springer/fig3_cxr.png",
+      "sha256": "826bd7d10fab68579a293da297d3c3dc7aceb0ff9d3b4e99bc49d49658240ec7"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/llncs.cls",
+      "to": "papers/final/mike2026/llncs.cls",
+      "sha256": "04ec99046ad9867f6cd54ffd1ef8c47c767b327d1baec77536db0528cd492fa2"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/optimization_traces.jpg",
+      "to": "papers/final/mike2026/optimization_traces.jpg",
+      "sha256": "01183c0bcabe4752ff37593eec234f5b2175f12c57e03459d583aedfc5c47254"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/README.md",
+      "to": "papers/final/springer/README.md",
+      "sha256": "c64bb60c8727ae6fa6079f28b7712c8bc723d7959860694e8ea65be3db9d1d58"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/references.bib",
+      "to": "papers/final/springer/references.bib",
+      "sha256": "771366a600a5c73b21f5ac500c64c9c3ffb2a3858890addaa180a0143059ad4c"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/sn-jnl.cls",
+      "to": "papers/final/springer/sn-jnl.cls",
+      "sha256": "36d0c3273a59d48dc6a9c7b080dfa1ec50dc10229d8751568d1f2e490ffa5ecc"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/sn-mathphys-num.bst",
+      "to": "papers/final/springer/sn-mathphys-num.bst",
+      "sha256": "b3a7c7fbcc1e7f9619de634fcea2f5bb7a245818a5942bc576e40ea001633332"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/splncs04.bst",
+      "to": "papers/final/mike2026/splncs04.bst",
+      "sha256": "f36c3a17e5304a692706359aafa9de709395a085e579eb47c027095aeaa35174"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/TEMPLATE_ANALYSIS.md",
+      "to": "papers/final/springer/TEMPLATE_ANALYSIS.md",
+      "sha256": "7507fa525dd75ac4fee9f0f132b6b5f37596c36b8f90c28b26ccd8ea120ebd3d"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/verification.json",
+      "to": "papers/final/springer/verification.json",
+      "sha256": "dae06fa1c02eb8bb7d9be1bc789ecc739cf91c8828e7e6eeacbd6ba1a358fc57"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/X_Fusion_MIKE2026_Final.bbl",
+      "to": "papers/final/mike2026/X_Fusion_MIKE2026_Final.bbl",
+      "sha256": "6775f09c974845f7e5014776f0e59ae533a5c9bda2692d8fc6deab1cbb2c9602"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/X_Fusion_MIKE2026_Final.pdf",
+      "to": "papers/final/mike2026/X_Fusion_MIKE2026_Final.pdf",
+      "sha256": "1221edc5ae6dfe4de42b10b9f9d459b71771b3d88187a3de1cd1fba0ad51e944"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/X_Fusion_MIKE2026_Final.tex",
+      "to": "papers/final/mike2026/X_Fusion_MIKE2026_Final.tex",
+      "sha256": "d0a5bc52fbd80c5b0357270f57297caa7932dfb396a9e776a8626628291db742"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/X_Fusion_Springer.bbl",
+      "to": "papers/final/springer/X_Fusion_Springer.bbl",
+      "sha256": "2297fe20588959971048a6b7211fd3dcf307bfc0c31180160d84162b3723950f"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/X_Fusion_Springer.pdf",
+      "to": "papers/final/springer/X_Fusion_Springer.pdf",
+      "sha256": "6f73ca8d93180d088492acdc451711e95eb662b10e12a7a89e4344efd82db7e2"
+    },
+    {
+      "from": "FINAL_PAPER_SPRINGER/X_Fusion_Springer.tex",
+      "to": "papers/final/springer/X_Fusion_Springer.tex",
+      "sha256": "c159f596a03c3f8cea3dd0b67141169cd79aae403e78434cc3e664252eeb0b49"
+    },
+    {
+      "from": "MIKE_2026_AUTHOR_NOTES.md",
+      "to": "papers/submission_records/MIKE_2026_AUTHOR_NOTES.md",
+      "sha256": "27a91f749df708bf1d2f939b62341a39a1d72bf09ceec2e5b7a40a690edab5cb"
+    },
+    {
+      "from": "MIKE_2026_COAUTHORS_PRIVATE.md",
+      "to": "papers/submission_records/MIKE_2026_COAUTHORS_PRIVATE.md",
+      "sha256": "a37de31d634604152879786c594d9db4042aa57393df6696f989c75515fa0873"
+    },
+    {
+      "from": "MIKE_2026_REVISED/architecture_diagram.tex",
+      "to": "papers/final/mike2026_reviewed/architecture_diagram.tex",
+      "sha256": "35de1a995d54780d5df6ce5441f9663d4e40bc7efacdaa7b10c2ac1f1dfb329d"
+    },
+    {
+      "from": "MIKE_2026_REVISED/DescriptionTexts.txt",
+      "to": "papers/final/mike2026_reviewed/DescriptionTexts.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "from": "MIKE_2026_REVISED/evidence/age_sex_test_predictions.csv",
+      "to": "papers/final/mike2026_reviewed/evidence/age_sex_test_predictions.csv",
+      "sha256": "b7697576b95b7d678f2d477b083ed65bb4b6373d2f9c4b4ef7921840835a87c3"
+    },
+    {
+      "from": "MIKE_2026_REVISED/evidence/disease_metrics_cluster_bootstrap.csv",
+      "to": "papers/final/mike2026_reviewed/evidence/disease_metrics_cluster_bootstrap.csv",
+      "sha256": "c3ef65aca6929b5d694cff2d7c08f5cafb3cb334a9ee88d274e2f5121dfbc88b"
+    },
+    {
+      "from": "MIKE_2026_REVISED/evidence/feature_manifest_sha256.txt",
+      "to": "papers/final/mike2026_reviewed/evidence/feature_manifest_sha256.txt",
+      "sha256": "bcc600518baec35935c3932db84e3e7c0b35d9f4a71472b9cb90039259fba8a2"
+    },
+    {
+      "from": "MIKE_2026_REVISED/evidence/image_pixels_age_sex_test_predictions.csv",
+      "to": "papers/final/mike2026_reviewed/evidence/image_pixels_age_sex_test_predictions.csv",
+      "sha256": "de59890b68b625c56e0e625f0691665e1a4eaa636b5970fd006b82fbfab61863"
+    },
+    {
+      "from": "MIKE_2026_REVISED/evidence/image_pixels_test_predictions.csv",
+      "to": "papers/final/mike2026_reviewed/evidence/image_pixels_test_predictions.csv",
+      "sha256": "a4bd6cd3c59306ac359d40146a6088a17695cd11a6e27a2a46b135d7e75292e8"
+    },
+    {
+      "from": "MIKE_2026_REVISED/evidence/independent_baselines.py",
+      "to": "papers/final/mike2026_reviewed/evidence/independent_baselines.py",
+      "sha256": "dbb1d4edb575a292f7b57a4cb69ffc3b6ce2fa2de936f6a480a440646fbb17e8"
+    },
+    {
+      "from": "MIKE_2026_REVISED/evidence/requirements.txt",
+      "to": "papers/final/mike2026_reviewed/evidence/requirements.txt",
+      "sha256": "b571891f4dd44aaeb7c8df8df2f733a3a91bebde1be0d9514eae2fcd09fe05c6"
+    },
+    {
+      "from": "MIKE_2026_REVISED/evidence/results.json",
+      "to": "papers/final/mike2026_reviewed/evidence/results.json",
+      "sha256": "82f813780f3effcd75c593e0c18e9f911302e29d32eb0860f4b23fe547dca453"
+    },
+    {
+      "from": "MIKE_2026_REVISED/evidence/revision_analysis.py",
+      "to": "papers/final/mike2026_reviewed/evidence/revision_analysis.py",
+      "sha256": "3991cc1d4490dbc05aa723985a9e1ad79a7b3f562af9d6632f0223b832e76c71"
+    },
+    {
+      "from": "MIKE_2026_REVISED/evidence/split_manifest.csv",
+      "to": "papers/final/mike2026_reviewed/evidence/split_manifest.csv",
+      "sha256": "82255f99b2213e04a42527bc968f563906dbddc3e1d59cd596891ec134162483"
+    },
+    {
+      "from": "MIKE_2026_REVISED/evidence/uncertainty_summary.json",
+      "to": "papers/final/mike2026_reviewed/evidence/uncertainty_summary.json",
+      "sha256": "7677794b3f0c08537b3c041b708a1eb5c3caa65ffcf4f0a7ddb4f7a43b5005ec"
+    },
+    {
+      "from": "MIKE_2026_REVISED/llncs.cls",
+      "to": "papers/final/mike2026_reviewed/llncs.cls",
+      "sha256": "04ec99046ad9867f6cd54ffd1ef8c47c767b327d1baec77536db0528cd492fa2"
+    },
+    {
+      "from": "MIKE_2026_REVISED/optimization_traces.jpg",
+      "to": "papers/final/mike2026_reviewed/optimization_traces.jpg",
+      "sha256": "01183c0bcabe4752ff37593eec234f5b2175f12c57e03459d583aedfc5c47254"
+    },
+    {
+      "from": "MIKE_2026_REVISED/per_disease_performance.pdf",
+      "to": "papers/final/mike2026_reviewed/per_disease_performance.pdf",
+      "sha256": "e7e9e1680fdb1f675b8e3fb81cdf3b33d0ef5368bf366a9bda0830ae0c65d015"
+    },
+    {
+      "from": "MIKE_2026_REVISED/per_disease_performance.png",
+      "to": "papers/final/mike2026_reviewed/per_disease_performance.png",
+      "sha256": "e8cf98c194d761a56551730c45741246e118f0fe8f9b1d6ca041315d8a1206fc"
+    },
+    {
+      "from": "MIKE_2026_REVISED/README.md",
+      "to": "papers/final/mike2026_reviewed/README.md",
+      "sha256": "1312ec6590a8d3a3b881afe3dc409b7e31840d198d5e5e6e04879c790a96d7bc"
+    },
+    {
+      "from": "MIKE_2026_REVISED/references.bib",
+      "to": "papers/final/mike2026_reviewed/references.bib",
+      "sha256": "f339bf11b207ce2a72649abd0066e4e07d402754794e914eb8647013f9f3eccb"
+    },
+    {
+      "from": "MIKE_2026_REVISED/REVISION_AND_SOURCE_CHECKS.md",
+      "to": "papers/final/mike2026_reviewed/REVISION_AND_SOURCE_CHECKS.md",
+      "sha256": "84b795ed3b9dced0e765655b9b66ff954a1d590e3722c2bc9d6c00171f0a419a"
+    },
+    {
+      "from": "MIKE_2026_REVISED/splncs04.bst",
+      "to": "papers/final/mike2026_reviewed/splncs04.bst",
+      "sha256": "f36c3a17e5304a692706359aafa9de709395a085e579eb47c027095aeaa35174"
+    },
+    {
+      "from": "MIKE_2026_REVISED/verification.json",
+      "to": "papers/final/mike2026_reviewed/verification.json",
+      "sha256": "3c2ded9c152cf39608c5e39d6e36a9d63b876a4bf1cc4400786c053d28efc44d"
+    },
+    {
+      "from": "MIKE_2026_REVISED/X_Fusion_MIKE2026_Anonymous.bbl",
+      "to": "papers/final/mike2026_reviewed/X_Fusion_MIKE2026_Anonymous.bbl",
+      "sha256": "78ebc30469d088e6855c0d6b5ae3f1203694c557327c89a6eab4c68f318c55a9"
+    },
+    {
+      "from": "MIKE_2026_REVISED/X_Fusion_MIKE2026_Anonymous.pdf",
+      "to": "papers/final/mike2026_reviewed/X_Fusion_MIKE2026_Anonymous.pdf",
+      "sha256": "d89fc500f9e2b60dc1223b1265b549d0282a83eb20ac20376e654e7481dcb64e"
+    },
+    {
+      "from": "MIKE_2026_REVISED/X_Fusion_MIKE2026_Anonymous.tex",
+      "to": "papers/final/mike2026_reviewed/X_Fusion_MIKE2026_Anonymous.tex",
+      "sha256": "b5143615ca7467ad30545f3e09a7f77862f02b6b5e5f2f69e2dc736b8902da44"
+    },
+    {
+      "from": "PROJECT_COMPLETE_CONTEXT.md",
+      "to": "docs/PROJECT_COMPLETE_CONTEXT.md",
+      "sha256": "5a454ceb3d52eec8f6eb0f6222afdb9146667c66f7c1a91aed12b56c743b41ab"
+    },
+    {
+      "from": "PROJECT_REVIEW_GUIDE.md",
+      "to": "docs/PROJECT_REVIEW_GUIDE.md",
+      "sha256": "230a16de33e4c8b800a21dbd21e4d8bb1a29fe2208a0aa98e58d51ed6c9e0182"
+    },
+    {
+      "from": "project_review_parameters.md",
+      "to": "docs/project_review_parameters.md",
+      "sha256": "fea1c53f0d4f3117b4100129731e2f1b8d08f696f1686d59e1656677e64a9943"
+    },
+    {
+      "from": "X-Fusion_Project_Review_Presentation_V3_TEMPLATE_ORDER (2).pptx",
+      "to": "presentations/X-Fusion_Project_Review.pptx",
+      "sha256": "05dba29d5936a465cd419483eea721191a45d78788447c598d675eda1a603209"
+    },
+    {
+      "from": "X_Fusion_Submission_Audit.md",
+      "to": "papers/review_records/X_Fusion_Submission_Audit.md",
+      "sha256": "6ffdab5d6a729dab33fdd35c2888dd6d07fa0492f98674d8609d8f56a89e7879"
+    }
+  ],
+  "archived_and_removed_files": [
+    {
+      "path": "Download+the+journal+article+template+package+(December+2024+version).zip",
+      "sha256": "812e76dcaa9c28dc1bff1fb6065d51729b67d4ea140552a05088317414a3ecae",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "FINAL_PAPER_SPRINGER/X_Fusion_MIKE2026_Final.aux",
+      "sha256": "99306c0339a69311ab5627eed165e9a8fca8244b7027370dab4a555cebfc3ba1",
+      "reason": "Regenerable LaTeX build output"
+    },
+    {
+      "path": "FINAL_PAPER_SPRINGER/X_Fusion_MIKE2026_Final.blg",
+      "sha256": "f58eb3939be3a30f2602efa92599283ecde779064ae1a3bcef60952fb4d53bf3",
+      "reason": "Regenerable LaTeX build output"
+    },
+    {
+      "path": "FINAL_PAPER_SPRINGER/X_Fusion_MIKE2026_Final.log",
+      "sha256": "47904fd3004b247f1861f90097207aa6ebfd155502d9bf62174dd0a46db631db",
+      "reason": "Regenerable LaTeX build output"
+    },
+    {
+      "path": "FINAL_PAPER_SPRINGER/X_Fusion_MIKE2026_Final.out",
+      "sha256": "2eb33f5f1b02099afdbf4eee0b50c6140f346b8d75e5a4a32ca7cbdbcc859dbf",
+      "reason": "Regenerable LaTeX build output"
+    },
+    {
+      "path": "FINAL_PAPER_SPRINGER/X_Fusion_Springer.aux",
+      "sha256": "fca520781f7506197d0c5ae47528c264d49233402c2961757a5a9b161b19172e",
+      "reason": "Regenerable LaTeX build output"
+    },
+    {
+      "path": "FINAL_PAPER_SPRINGER/X_Fusion_Springer.blg",
+      "sha256": "759d59c5f9a8d12348ed47c98fbb25ceb9206af0e614553b378d5f5971ccf9dd",
+      "reason": "Regenerable LaTeX build output"
+    },
+    {
+      "path": "FINAL_PAPER_SPRINGER/X_Fusion_Springer.log",
+      "sha256": "8e2a7d6a445986560b5cfd57dfec1a977e677f36f120f691d145fa5cb4415805",
+      "reason": "Regenerable LaTeX build output"
+    },
+    {
+      "path": "FINAL_PAPER_SPRINGER/X_Fusion_Springer.out",
+      "sha256": "dcd91689fc2e55ef087b4c17bf4f84dec9da28c7c29bfa4d51a074a93dc21ff2",
+      "reason": "Regenerable LaTeX build output"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/architecture_diagram.tex",
+      "sha256": "35de1a995d54780d5df6ce5441f9663d4e40bc7efacdaa7b10c2ac1f1dfb329d",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/DescriptionTexts.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/evidence/age_sex_test_predictions.csv",
+      "sha256": "b7697576b95b7d678f2d477b083ed65bb4b6373d2f9c4b4ef7921840835a87c3",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/evidence/feature_manifest_sha256.txt",
+      "sha256": "bcc600518baec35935c3932db84e3e7c0b35d9f4a71472b9cb90039259fba8a2",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/evidence/image_pixels_age_sex_test_predictions.csv",
+      "sha256": "de59890b68b625c56e0e625f0691665e1a4eaa636b5970fd006b82fbfab61863",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/evidence/image_pixels_test_predictions.csv",
+      "sha256": "a4bd6cd3c59306ac359d40146a6088a17695cd11a6e27a2a46b135d7e75292e8",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/evidence/independent_baselines.py",
+      "sha256": "dbb1d4edb575a292f7b57a4cb69ffc3b6ce2fa2de936f6a480a440646fbb17e8",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/evidence/requirements.txt",
+      "sha256": "06ee63d9e557991c75445f7f896c709f54267164f25f82d0939a304b358245ad",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/evidence/results.json",
+      "sha256": "82f813780f3effcd75c593e0c18e9f911302e29d32eb0860f4b23fe547dca453",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/evidence/split_manifest.csv",
+      "sha256": "82255f99b2213e04a42527bc968f563906dbddc3e1d59cd596891ec134162483",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/llncs.cls",
+      "sha256": "04ec99046ad9867f6cd54ffd1ef8c47c767b327d1baec77536db0528cd492fa2",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/optimization_traces.jpg",
+      "sha256": "01183c0bcabe4752ff37593eec234f5b2175f12c57e03459d583aedfc5c47254",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/README.md",
+      "sha256": "488885ef8309874bc4e4559b6568af2624eebe29f08ccbf8df42fa2493e564f6",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/references.bib",
+      "sha256": "771366a600a5c73b21f5ac500c64c9c3ffb2a3858890addaa180a0143059ad4c",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/splncs04.bst",
+      "sha256": "f36c3a17e5304a692706359aafa9de709395a085e579eb47c027095aeaa35174",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/verification.json",
+      "sha256": "43edd357370d51033c029b2d47e4d1e9246be32905927a1a06944a9c59ca0d61",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/X_Fusion_MIKE2026_Anonymous.aux",
+      "sha256": "1910568e5892c2857fa47a0ac576aa7b70682c41234a5de90fc494ba4b75ff1b",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/X_Fusion_MIKE2026_Anonymous.bbl",
+      "sha256": "6775f09c974845f7e5014776f0e59ae533a5c9bda2692d8fc6deab1cbb2c9602",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/X_Fusion_MIKE2026_Anonymous.blg",
+      "sha256": "a3af7b3ca40e760eddeca3fcb6fac8aa43f6f75bdcfe791bca32c1cd8c19db9e",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/X_Fusion_MIKE2026_Anonymous.log",
+      "sha256": "d0b271bbb1a471642c7ccd227b35c67006f0871e7de2c5cce40013c773049a60",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/X_Fusion_MIKE2026_Anonymous.out",
+      "sha256": "d35e4a3e7ce27a6227384ddb786d349a8ba8b4406c77e7c48a9eaf38a6ec49ed",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/X_Fusion_MIKE2026_Anonymous.pdf",
+      "sha256": "36ad6e3f77d3817f58bce20b8ac46b4b8f0eb23cedd3dfd3b5175aa5ad91f920",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_EVIDENCE_UPDATED/X_Fusion_MIKE2026_Anonymous.tex",
+      "sha256": "9e34bb5fb68f7e7352ae702815e6c7f3199e38c13607723a458970bdf60073f6",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_REVISED/X_Fusion_MIKE2026_Anonymous.aux",
+      "sha256": "a1fd3997fad41da7071ac9bdb04fa0f7751826e728ebcfbcc86f9d359948e2d7",
+      "reason": "Regenerable LaTeX build output"
+    },
+    {
+      "path": "MIKE_2026_REVISED/X_Fusion_MIKE2026_Anonymous.blg",
+      "sha256": "1d05d67ddb047d63f3de883377124e1f96f8f673ec3c71f7e38a483b025f68c0",
+      "reason": "Regenerable LaTeX build output"
+    },
+    {
+      "path": "MIKE_2026_REVISED/X_Fusion_MIKE2026_Anonymous.log",
+      "sha256": "b9083d969b4e7658350709bf4016643e90a5b5cc07f395ae4dba4835b0d97de5",
+      "reason": "Regenerable LaTeX build output"
+    },
+    {
+      "path": "MIKE_2026_REVISED/X_Fusion_MIKE2026_Anonymous.out",
+      "sha256": "d35e4a3e7ce27a6227384ddb786d349a8ba8b4406c77e7c48a9eaf38a6ec49ed",
+      "reason": "Regenerable LaTeX build output"
+    },
+    {
+      "path": "MIKE_2026_SUBMISSION/DescriptionTexts.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_SUBMISSION/llncs.cls",
+      "sha256": "04ec99046ad9867f6cd54ffd1ef8c47c767b327d1baec77536db0528cd492fa2",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_SUBMISSION/optimization_traces.jpg",
+      "sha256": "01183c0bcabe4752ff37593eec234f5b2175f12c57e03459d583aedfc5c47254",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_SUBMISSION/README.md",
+      "sha256": "8d06327b6e04324f07b4812f8b0972a93efc4337f03e62cb5fa59651418f3031",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_SUBMISSION/references.bib",
+      "sha256": "771366a600a5c73b21f5ac500c64c9c3ffb2a3858890addaa180a0143059ad4c",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_SUBMISSION/splncs04.bst",
+      "sha256": "f36c3a17e5304a692706359aafa9de709395a085e579eb47c027095aeaa35174",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_SUBMISSION/texput.log",
+      "sha256": "f7a04e5d4c4568fdb4e01d6175eed9b46a285270618ef490c72ec13489fb0ea0",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_SUBMISSION/verification.json",
+      "sha256": "db703466d2392ec05f374dea679939bff4904f6609e93492c48e9a14289b3ae1",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_SUBMISSION/X_Fusion_MIKE2026_Anonymous.aux",
+      "sha256": "99cb111aca53cfb72d83a78bf7051350f8ca885fa58265b9054f5d5b04c34b4d",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_SUBMISSION/X_Fusion_MIKE2026_Anonymous.bbl",
+      "sha256": "6775f09c974845f7e5014776f0e59ae533a5c9bda2692d8fc6deab1cbb2c9602",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_SUBMISSION/X_Fusion_MIKE2026_Anonymous.blg",
+      "sha256": "a3af7b3ca40e760eddeca3fcb6fac8aa43f6f75bdcfe791bca32c1cd8c19db9e",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_SUBMISSION/X_Fusion_MIKE2026_Anonymous.log",
+      "sha256": "d58113b1e529b8162443595bf7be8ecb575b5bc66bfe1af452518ba7330b383a",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_SUBMISSION/X_Fusion_MIKE2026_Anonymous.out",
+      "sha256": "d35e4a3e7ce27a6227384ddb786d349a8ba8b4406c77e7c48a9eaf38a6ec49ed",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_SUBMISSION/X_Fusion_MIKE2026_Anonymous.pdf",
+      "sha256": "8a134da6d6639cfce813a49338f66a5249c4a18a6250554037df753cbf8d00cd",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "MIKE_2026_SUBMISSION/X_Fusion_MIKE2026_Anonymous.tex",
+      "sha256": "dcfbbc3bfe014498477321fc78e3cde1cf67c2f7b8b0582c0d38c80233d2ede8",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/conference-template-a4.docx",
+      "sha256": "57e2125b0a04860e103fd634c2b5fd19a7ea571fa59ac577bd97afc73ad99482",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/fig2.png",
+      "sha256": "ad418f19aa9e296f85a3a1420351673c59579388e743aa5fb00f6cbb8189b3d0",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/fig4.jpeg",
+      "sha256": "01183c0bcabe4752ff37593eec234f5b2175f12c57e03459d583aedfc5c47254",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/figures/fig1_architecture.png",
+      "sha256": "c1d0751133b52c5b9524e262d1d7abc3d0355da5206a98bf0d67a08367609472",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/figures/fig2_losses.jpg",
+      "sha256": "184f24508fa46ffa4320cde768d33d94db556757a1bd9031835759b839f96c41",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/figures/fig3_cxr.png",
+      "sha256": "826bd7d10fab68579a293da297d3c3dc7aceb0ff9d3b4e99bc49d49658240ec7",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/reconstructed_pdf/figures/fig1_architecture.png",
+      "sha256": "c1d0751133b52c5b9524e262d1d7abc3d0355da5206a98bf0d67a08367609472",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/reconstructed_pdf/figures/fig2_losses.jpg",
+      "sha256": "01183c0bcabe4752ff37593eec234f5b2175f12c57e03459d583aedfc5c47254",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/reconstructed_pdf/figures/fig3_cxr.png",
+      "sha256": "826bd7d10fab68579a293da297d3c3dc7aceb0ff9d3b4e99bc49d49658240ec7",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/reconstructed_pdf/page-1.png",
+      "sha256": "079579f743f01cdaee04b6db77af026a6060c02e3d0c968449b96ead22561b0d",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/reconstructed_pdf/page-2.png",
+      "sha256": "378304d3c6853a52f3473209bb25a9b53a672f889125cc92b60cfa7473d52529",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/reconstructed_pdf/page-3.png",
+      "sha256": "bc420586ae6a4db9e73da503c6ecb4bac8dce46e456fa2b0ee3b8a6366abe2bd",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/reconstructed_pdf/page-4.png",
+      "sha256": "9dc89561a20e741e4cd8f28ba70af2960c5782b8f0a316d67cefbc02404aa7be",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/reconstructed_pdf/page-5.png",
+      "sha256": "18bf843b30f70c5d45bc43e0bc4b8affc6bf288824b833ca62c338dd7123907b",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/reconstructed_pdf/page-6.png",
+      "sha256": "ad47a8293bf7cb200022dde86796ed5170813f8f2dc6df58c67bd2ea81de346e",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/reconstructed_pdf/README.md",
+      "sha256": "ae8e8e0bd11d5138e63ea00088e1b94107c740533be46aabcb5cb84cca81d9f7",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/reconstructed_pdf/verification.json",
+      "sha256": "a1b7d39d0e2828cea8d6ef7c7a818c9d28436ace761844e455b5dc4e7d56c2c6",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/reconstructed_pdf/X_Fusion_IEEE_Camera_Ready_Reconstructed.aux",
+      "sha256": "14b099cb2d855aa4ff24d74905c4d1d66c6da20477551f1588fccf32542597a8",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/reconstructed_pdf/X_Fusion_IEEE_Camera_Ready_Reconstructed.log",
+      "sha256": "1671c313d23554337c43fd46e74ff73c50676f514bf939b0ca65d8f84f6b01cc",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/reconstructed_pdf/X_Fusion_IEEE_Camera_Ready_Reconstructed.out",
+      "sha256": "be33d6520ccace5711a40d5ebc6702c7867f45c46d61403f8033f1100f34a716",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/reconstructed_pdf/X_Fusion_IEEE_Camera_Ready_Reconstructed.pdf",
+      "sha256": "cb3f9dd9d6a9912cd0971c9fcb34c7fececbf414ebdc6fd42395aaf382875472",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/reconstructed_pdf/X_Fusion_IEEE_Camera_Ready_Reconstructed.tex",
+      "sha256": "a1c7b95139a8d1481efa46af43d00e32e0383a3b46e0bb7a6f168dcdc1985639",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/X_Fusion_IEEE_Camera_Ready.pdf",
+      "sha256": "22bf4aec25be6350bf8d268bc4da8e4985ccd6fbf04ee272bbb713ff67159fda",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/X_Fusion_IEEE_Camera_Ready.tex",
+      "sha256": "a22e1fa8049330e4d323eb62ed73d7d61dffc82adda9543ce601cdeeb989794c",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "RESEARCH_PAPER/X_Fusion_IEEE_Final.tex",
+      "sha256": "a22e1fa8049330e4d323eb62ed73d7d61dffc82adda9543ce601cdeeb989794c",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/check_independent_results.py",
+      "sha256": "96c76209c38f6c4387baabd7f12fdb6345916037818c0c0b0603d309c62741a1",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/disclosure_edit_render/page-01.png",
+      "sha256": "dc7465a194ad0d8a999b1f6ed65b1948d00b0f4da9bbd15d2caa6b4127755917",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/disclosure_edit_render/page-02.png",
+      "sha256": "00f297bd0f19fbc09c7fca066b042da985dbe7861fcff4772ddafc6f5ab40723",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/disclosure_edit_render/page-03.png",
+      "sha256": "f281e457f71f535b5c2ff6aadbcc0a2b80bb2be8549d65e13593dfa8ad67bd3e",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/disclosure_edit_render/page-04.png",
+      "sha256": "ab1ceca0f30f0f3099fc7e48f3569920121fb04e9967665569596802a823749e",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/disclosure_edit_render/page-05.png",
+      "sha256": "5f7b5dd310f89f313b5e0a9ece1edc51b1026aaf4ca40571571a2efae16e4a1e",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/disclosure_edit_render/page-06.png",
+      "sha256": "18cf188ca68a45933a8e0494e540fe722d9fe728b96c954203a0db7d73f3a1c7",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/disclosure_edit_render/page-07.png",
+      "sha256": "8e17c8d681d87de6901c78e9cec3fdf7a56a95edd458261a6986c05b29706748",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/disclosure_edit_render/page-08.png",
+      "sha256": "2cd859a9e2cef757e4566fdcb5238c36a342834472004375163c3c6aba2aca9c",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/disclosure_edit_render/page-09.png",
+      "sha256": "9368aa179ad0eb4156a2bbd90aeeeec1dbd74ad38cdcc8a662fa17d40a85e03c",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/disclosure_edit_render/page-10.png",
+      "sha256": "339a922fff4231bb290c15d8c9e0398c5c0dbb810c1c438a2a18c99133bf95c3",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/evidence_render/final-1.png",
+      "sha256": "38137249cf187303d5179b8a02e7ca4b91cfcd9642fbb87261b4d3eaa00ac226",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/evidence_render/final-2.png",
+      "sha256": "10f4e21bbab98d4ee7665270fa04b5f8867aad01e536d9e52cd6d68f7e217a91",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/evidence_render/final-3.png",
+      "sha256": "9f13085ee72d2ca65abcd687ef4650ac49aaab9ee5f24c679cd26dc8d7c82318",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/evidence_render/final-4.png",
+      "sha256": "50c34eb02a75aeedc81b3b01488bdb710e592c04f9f9ca840fcf02b8887881e9",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/evidence_render/final-5.png",
+      "sha256": "4e6e878acbac3d27505014bec4ecb6a0d404c4ce0ef327395cc05fa438fd9acd",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/evidence_render/final-6.png",
+      "sha256": "887d1f56f879703f088ccb9dc46ca98deae1a8a975420ae374a86f074db7f5c1",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/evidence_render/final-7.png",
+      "sha256": "8cc56370a604be3a61f0c81f8066123674154415b09f3c57f5269c3ec825e0c7",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/evidence_render/final-8.png",
+      "sha256": "681c08c4d4f38cfd840fc365d68b70902c2f305c2fd4f79689a2e87d720dfdd6",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/evidence_render/final-9.png",
+      "sha256": "e428447298760f2ea45bfbb6be2bb7944de6686fce00e79de19882518b568ee3",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/evidence_render/page-1.png",
+      "sha256": "b7d5adbbf788bcb2c2f895cbe59becc042caf885fd05ffebe5e2ce44ad593325",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/evidence_render/page-2.png",
+      "sha256": "fff9bc83d2de5ef458d519a46811f8897967933b2fb2b140c6c84e8e61e1e422",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/evidence_render/page-3.png",
+      "sha256": "a4008362d4c11d57d42bba76f07f03e7079c6b974c38dd0a3d7c394e6c9ebadc",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/evidence_render/page-4.png",
+      "sha256": "4db3c1116694bf2477ff899343ec232c670eb390ba67aba2f6892a19b83855c5",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/evidence_render/page-5.png",
+      "sha256": "b629f16ce258605bd177b8b95a6b77c28d7f59326fe1a3deff2cc27351d81e6b",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/evidence_render/page-6.png",
+      "sha256": "c94f9081f17d67eefe1bb7dee6e66d550a807cba3a7dab1f8014e5cf32ada16c",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/evidence_render/page-7.png",
+      "sha256": "91acfba6668d5db5be6f3ce9ab6adfa5ec8c8088fd2e711a5f6d4445e8c0813c",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/evidence_render/page-8.png",
+      "sha256": "3ba790dbb6932831f90ac4f638fc9081c991dfc6cea960ec662a850af1ba0f2c",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/evidence_render/page-9.png",
+      "sha256": "c32a3ac93880daddd48848889bdc1a2b820ef8b9ab85c68153503cbf5da109ec",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/independent_baselines.py",
+      "sha256": "dbb1d4edb575a292f7b57a4cb69ffc3b6ce2fa2de936f6a480a440646fbb17e8",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/lncs_template.zip",
+      "sha256": "42afb32ed4fadc9e209134ec65dab1bd2a7ead42f9a3f8abb184f250c4a197b9",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/metric_reanalysis.json",
+      "sha256": "d53f8ba5716436570f8bd01ca33cd7a3718bdad948ac35f90f9b8dbbe1a26380",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/package_evidence.py",
+      "sha256": "6855ab98999d64dc853fa811f0b6d85cf32a83754189192dc8420fab1edd64ec",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/package_reviewed.py",
+      "sha256": "4311fbc97a608b1d10a4d7b206803a592409b594ae8ac448eafacda7417b5e66",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/prepare.py",
+      "sha256": "b2de1924e8f520b9d7f2794a6d3ba4c4a69db7f56e9debd86885f29c4866533e",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/render/page-1.png",
+      "sha256": "1ee91a8d22bb3ee9b8b830c6fb54701b67147319cfcea4da3f2d3ec822098e39",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/render/page-2.png",
+      "sha256": "952c39fef0af2e77422030a48ba6b2c84e7741e694d249460f1f36a4b230aa3a",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/render/page-3.png",
+      "sha256": "6d0afb23ee815e585eee99f866f219dde00b3853c185b489c9c89a8b32db2ec7",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/render/page-4.png",
+      "sha256": "e107beaf4510fa2fa9561c474f4a58dab7cc9c5bbf036b00c69dfebc8223271f",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/render/page-5.png",
+      "sha256": "256daf264d90b8def4ed016770d3345382e19b3681a7e538e01c8f9d7fb4d05f",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/render/page-6.png",
+      "sha256": "07f178b3f8c7c1d1790ad8a063bfc82bbefe0029c88de7da59eb9dbd28c7e082",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/render/page-7.png",
+      "sha256": "ab703ec159d561eb7b2b6297f0ed7cabd2e0f9b4b0b09c5ad4f29c8fc36dc340",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/render/page-8.png",
+      "sha256": "ac500e89260ee332ccc397f598badb93b5a23edc8de2a4004866e435919f14c3",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/revise_paper.py",
+      "sha256": "714aced307ef22082cfabaf88810b609df7586951d10df3803848097cb38f5c6",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/revised_render/page-01.png",
+      "sha256": "dc7465a194ad0d8a999b1f6ed65b1948d00b0f4da9bbd15d2caa6b4127755917",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/revised_render/page-02.png",
+      "sha256": "00f297bd0f19fbc09c7fca066b042da985dbe7861fcff4772ddafc6f5ab40723",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/revised_render/page-03.png",
+      "sha256": "f281e457f71f535b5c2ff6aadbcc0a2b80bb2be8549d65e13593dfa8ad67bd3e",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/revised_render/page-04.png",
+      "sha256": "ab1ceca0f30f0f3099fc7e48f3569920121fb04e9967665569596802a823749e",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/revised_render/page-05.png",
+      "sha256": "5f7b5dd310f89f313b5e0a9ece1edc51b1026aaf4ca40571571a2efae16e4a1e",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/revised_render/page-06.png",
+      "sha256": "18cf188ca68a45933a8e0494e540fe722d9fe728b96c954203a0db7d73f3a1c7",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/revised_render/page-07.png",
+      "sha256": "8e17c8d681d87de6901c78e9cec3fdf7a56a95edd458261a6986c05b29706748",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/revised_render/page-08.png",
+      "sha256": "2cd859a9e2cef757e4566fdcb5238c36a342834472004375163c3c6aba2aca9c",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/revised_render/page-09.png",
+      "sha256": "4a265f7bff341459c9754c808426a42ad8f8e5031463bf98470f6e2e589f2edf",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/revised_render/page-10.png",
+      "sha256": "a7f54045928897b5f90a6c69f789d68599d93fce8c4132dab644e3cc8f74acd2",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/revision_analysis.py",
+      "sha256": "6db9b6036c3304d061dfd36f84c1735a0178008bef4dea3cb36916e565804c61",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/submission_summary_review/page-1.png",
+      "sha256": "2aa8b90282fe047fc190078e0e49af977b91f5aab7936d196c6488860fd27bef",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/submission_summary_review/page-2.png",
+      "sha256": "9e1fb75fb7e58b4b6f9c44d075d6f85e98cff72e8a4231350a822eab5da24f56",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/template/DescriptionTexts.txt",
+      "sha256": "31666ccea9072ad9b6af59624f50e239e6d663cb952d894891ed1cff2efb7868",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/template/fig1.eps",
+      "sha256": "e0da72903f4ba3ae2307869fd2f1d2ad460281725e0a3205862e91c8d6daf831",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/template/history.txt",
+      "sha256": "9a4a85d0e7ab49fa35c638fee5e4083ae2b5bd0f5a943113098dc2e86e62d261",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/template/llncs.cls",
+      "sha256": "04ec99046ad9867f6cd54ffd1ef8c47c767b327d1baec77536db0528cd492fa2",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/template/llncsdoc.pdf",
+      "sha256": "bda75de93cd92490d678172e98a11bcbb0dc76a88831333bf0ef2aa9fdb4d006",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/template/readme.txt",
+      "sha256": "d5a69ddfcd5d316877c301e9504c6302d1f1dc7b2c8f128d8066cdd0b0a7e21a",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/template/samplepaper.pdf",
+      "sha256": "eca3d6e563297b74ca4f75357b24444443abf33ef0c6d0bf952b1f3e04e122c1",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/template/samplepaper.tex",
+      "sha256": "08142e057525c0edcab3e62a7028084a136cdbd7a66af8eb5157c2e5ae1806a6",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/template/splncs04.bst",
+      "sha256": "f36c3a17e5304a692706359aafa9de709395a085e579eb47c027095aeaa35174",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/update_evidence.py",
+      "sha256": "2b0745bfb5b9398d286aa286f6649abdc4f99311e1e40ba3d07647d877ff163e",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike2026/verify.py",
+      "sha256": "06ef7a36749bb49ba025ed7f9c21d02d9fed383466ea550077c661239d06ad3e",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike_final_review/architecture-3.png",
+      "sha256": "87b329a982d40434a241d179ec80702c5a93e2f36411da33ad91fc36cf5919f9",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike_final_review/architecture_diagram.tex",
+      "sha256": "35de1a995d54780d5df6ce5441f9663d4e40bc7efacdaa7b10c2ac1f1dfb329d",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike_final_review/llncs.cls",
+      "sha256": "04ec99046ad9867f6cd54ffd1ef8c47c767b327d1baec77536db0528cd492fa2",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike_final_review/optimization_traces.jpg",
+      "sha256": "01183c0bcabe4752ff37593eec234f5b2175f12c57e03459d583aedfc5c47254",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike_final_review/README.md",
+      "sha256": "573d5981b76b417f491ebfef805f0eaf0a76554112101708b238b12b2307a783",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike_final_review/references.bib",
+      "sha256": "771366a600a5c73b21f5ac500c64c9c3ffb2a3858890addaa180a0143059ad4c",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike_final_review/splncs04.bst",
+      "sha256": "f36c3a17e5304a692706359aafa9de709395a085e579eb47c027095aeaa35174",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike_final_review/X_Fusion_MIKE2026_Anonymous.bbl",
+      "sha256": "6775f09c974845f7e5014776f0e59ae533a5c9bda2692d8fc6deab1cbb2c9602",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike_final_review/X_Fusion_MIKE2026_Anonymous.pdf",
+      "sha256": "1c254b415f55a38ead233e7a0f0dda0698b62cd5e0599cf6056dbbac65e404c6",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/mike_final_review/X_Fusion_MIKE2026_Anonymous.tex",
+      "sha256": "339d47eba4e1f200f866aec9360358378143bb2598ebd680c71540187e2bd585",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/pdfs/davit_review/page_10.png",
+      "sha256": "848e8b19726bf1a8f71b811a7d909409d62707f6db2293003b4979ced21968c3",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/pdfs/davit_review/page_4.png",
+      "sha256": "87421a8b02ee341b3d89c29355205fa117f8b929c8f7a4a448baa7decf85a49b",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/pdfs/davit_review/page_8.png",
+      "sha256": "c771085d7a2e39033b82ada7ebbac6f8c2fe8316572ce4efd46bee813fe8ea76",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/pdfs/davit_review/page_9.png",
+      "sha256": "f4dd1a21b873221986d8f74ef33466b8a73329eace4226d70127c32563989d5f",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/pdfs/x_fusion_review/compare_glyphs.py",
+      "sha256": "d9f3512bc578230b1aa49bf5d606e24331726e936ae9190c78048a9dc4dbc83b",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/pdfs/x_fusion_review/compare_layout.py",
+      "sha256": "b060e9bfebd4d8570fa289c808fee0e022e79107acb9fe10b1789d2f8c1cb988",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/pdfs/x_fusion_review/figures/fig1_architecture.png",
+      "sha256": "c1d0751133b52c5b9524e262d1d7abc3d0355da5206a98bf0d67a08367609472",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/pdfs/x_fusion_review/figures/fig2_losses.jpg",
+      "sha256": "184f24508fa46ffa4320cde768d33d94db556757a1bd9031835759b839f96c41",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/pdfs/x_fusion_review/figures/fig3_cxr.png",
+      "sha256": "826bd7d10fab68579a293da297d3c3dc7aceb0ff9d3b4e99bc49d49658240ec7",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/pdfs/x_fusion_review/page-1.png",
+      "sha256": "916f41e26476ad7d8df59a3fc77c0c5723f2f8bbb99d261e5d6f45501a371024",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/pdfs/x_fusion_review/page-2.png",
+      "sha256": "ea31c4060d7307b2b86ea7ddc4ca3e54babe85cce42238ecf0b2b8b67325edda",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/pdfs/x_fusion_review/page-3.png",
+      "sha256": "99195538b47907359b8f3eb6516f3ab7e73da6329bd06dc567236efe56ef0e87",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/pdfs/x_fusion_review/page-4.png",
+      "sha256": "5e48ac400d1c8b6baaf19c117d88224373aa5dea84d057d1cb3911bd5c963b27",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/pdfs/x_fusion_review/page-5.png",
+      "sha256": "66edf8877ac74f0bddf6412172316cb92b62de7048917e5ca27647cadf552c8d",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/pdfs/x_fusion_review/page-6.png",
+      "sha256": "e8eea3b6b6f0437fcc769eac0d1fb0318d12b117aef15c3d8efa6201681be5ad",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/pdfs/x_fusion_review/pdf_text.txt",
+      "sha256": "a0e61ed1d993d86f14cb059c1f30503e4fdb78e3ba07befb9ad0a3aab790b853",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/pdfs/x_fusion_review/verify_reconstruction.py",
+      "sha256": "a90448074e209e4c12354a274d04306806a6418070209f046162593e0d940289",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/pdfs/x_fusion_review/X_Fusion_IEEE_Camera_Ready.pdf",
+      "sha256": "22bf4aec25be6350bf8d268bc4da8e4985ccd6fbf04ee272bbb713ff67159fda",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/pdfs/x_fusion_review/X_Fusion_IEEE_Camera_Ready.tex",
+      "sha256": "a22e1fa8049330e4d323eb62ed73d7d61dffc82adda9543ce601cdeeb989794c",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/ppt_review/image4.png",
+      "sha256": "657253480362008edd0a61bdb86107bdc5324b435deb3f534b4ff65c071948f2",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/convert.py",
+      "sha256": "c59b91ea6614b9b90d08940d745ac7d7c84589423963820806bf235d121e7f07",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/original/figures/fig1_architecture.png",
+      "sha256": "c1d0751133b52c5b9524e262d1d7abc3d0355da5206a98bf0d67a08367609472",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/original/figures/fig2_losses.jpg",
+      "sha256": "01183c0bcabe4752ff37593eec234f5b2175f12c57e03459d583aedfc5c47254",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/original/figures/fig3_cxr.png",
+      "sha256": "826bd7d10fab68579a293da297d3c3dc7aceb0ff9d3b4e99bc49d49658240ec7",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/original/README.md",
+      "sha256": "ae8e8e0bd11d5138e63ea00088e1b94107c740533be46aabcb5cb84cca81d9f7",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/original/verification.json",
+      "sha256": "a1b7d39d0e2828cea8d6ef7c7a818c9d28436ace761844e455b5dc4e7d56c2c6",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/original/X_Fusion_IEEE_Camera_Ready_Reconstructed.pdf",
+      "sha256": "cb3f9dd9d6a9912cd0971c9fcb34c7fececbf414ebdc6fd42395aaf382875472",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/original/X_Fusion_IEEE_Camera_Ready_Reconstructed.tex",
+      "sha256": "caf477c307c21cac725fe9eeefa8ec09b4d6cac63d7df8738bbfdaf9da38a7c5",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/render/page-01.png",
+      "sha256": "691e41cdc25c5e70425f623f98c59bd5b6bb4c317407cbf704fbf3fa1e4bb240",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/render/page-02.png",
+      "sha256": "40c3bdd14284bfdf780061b599942de3f19ea0ab8d8d0569ef742947d67f2011",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/render/page-03.png",
+      "sha256": "c6f253d1a1b6f2a56e189a99ea5364c3c3fbf7ed82ab189ef251814ed30fa4e6",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/render/page-04.png",
+      "sha256": "bd25b9cd87685763ff20c6dddd58d3c3f91ca7623f781a195c70a407c1eba0a6",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/render/page-05.png",
+      "sha256": "62138c8b4bd9431047327fa8c63a116d0f9c65ff225ea6a8fcd995d3c5f6360a",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/render/page-06.png",
+      "sha256": "bd65608d6fbd4aca253355503a9198cd0fadf8e97f958a299a0a2229a67ea9d0",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/render/page-07.png",
+      "sha256": "517c58fa0661bf35baaaefeb423579756732976f425242982e44aaf6e46d8266",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/render/page-08.png",
+      "sha256": "78e3461cd6ab16fd83748941b57ba85f577615729a24577504731159fffed3ef",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/render/page-09.png",
+      "sha256": "6f563df007796ebae95215ac83ffcdfe507153f7c2ea75ce9f1e7f0a232ad767",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/render/page-10.png",
+      "sha256": "bd3d11f109aa55bf0238dba967e6b7b30ca5ef4c3e43520ae76e7245480c07b6",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/render/page-11.png",
+      "sha256": "48ed538fc20c32ec91eaf193eeff18ab7683ab15a55743ca706cfeba6e3ee9f0",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/render/page-12.png",
+      "sha256": "a4f6c233705b3866ee1779997bf5e4453e9ed883a79479293151ea4610d0727b",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/render/page-13.png",
+      "sha256": "cd63bc97027d72807cda9739d596b2af1aa7919728dec12028f99049823a357a",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/sn-article.txt",
+      "sha256": "376e746494794991053d16a4c3a6da02615f2a6ba043b865376d9984b0824a2c",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/user-manual.txt",
+      "sha256": "1b2bf2376504c3ddc895219ac8237ef59f835341d5010fcba38e68ec0d0db40c",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "tmp/springer_work/verify_package.py",
+      "sha256": "1f4e3961bd288d7bb7eb620565a7b873eb53f1beb830559a3ab35222489d42fa",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "X_Fusion__Tri_Modal_Transformer_Fusion_forMulti_Label_Chest_X_ray_Analysis.pdf",
+      "sha256": "219334b7c34d725a85dd7ce313cfdc993cb140bf68ae66bd753a8c195d3448ce",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "X_Fusion_IEEE_Camera_Ready.pdf",
+      "sha256": "22bf4aec25be6350bf8d268bc4da8e4985ccd6fbf04ee272bbb713ff67159fda",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "X_Fusion_IEEE_Camera_Ready.tex",
+      "sha256": "a22e1fa8049330e4d323eb62ed73d7d61dffc82adda9543ce601cdeeb989794c",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "X_Fusion_IEEE_Equation_Explained.pdf",
+      "sha256": "25cdaddb5f15ffcb25daa2fce1156a46364b483aabb3c92ebfbb7c89fad9f7e1",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "X_Fusion_IEEE_Equation_Explained.synctex.gz",
+      "sha256": "c5bb0552db86ee1c99271b6ea6f63c750d44736350b262b75c573d44cc162359",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "X_Fusion_IEEE_Equation_Explained.tex",
+      "sha256": "caf477c307c21cac725fe9eeefa8ec09b4d6cac63d7df8738bbfdaf9da38a7c5",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "X_Fusion_MIKE2026_Anonymous (1).pdf",
+      "sha256": "d89fc500f9e2b60dc1223b1265b549d0282a83eb20ac20376e654e7481dcb64e",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "X_Fusion_MIKE2026_Anonymous.pdf",
+      "sha256": "36ad6e3f77d3817f58bce20b8ac46b4b8f0eb23cedd3dfd3b5175aa5ad91f920",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    },
+    {
+      "path": "X_Fusion_MIKE2026_Reviewed.zip",
+      "sha256": "06ba4720043c46373e18b694f78566b42006b696ff26377fe720475013a55a3b",
+      "reason": "Superseded paper, duplicate, original template package, or temporary paper work (retained in recovery ZIP)"
+    }
+  ],
+  "protected_file_count": 64,
+  "verification": {
+    "backup_crc_and_sha256": "passed",
+    "copied_files_sha256": "passed",
+    "protected_project_file_hashes": "passed",
+    "shared_bibliography_copied_to_conference_package": true
+  },
+  "post_move_image_deduplication": [
+    {
+      "removed": "papers/project_figures/fig1_architecture.png",
+      "identical_retained_file": "papers/final/springer/fig1_architecture.png",
+      "original_archive_member": "figures/fig1_architecture.png",
+      "sha256": "c1d0751133b52c5b9524e262d1d7abc3d0355da5206a98bf0d67a08367609472"
+    },
+    {
+      "removed": "papers/project_figures/fig3_cxr.png",
+      "identical_retained_file": "papers/final/springer/fig3_cxr.png",
+      "original_archive_member": "figures/fig3_cxr.png",
+      "sha256": "826bd7d10fab68579a293da297d3c3dc7aceb0ff9d3b4e99bc49d49658240ec7"
+    }
+  ]
+}

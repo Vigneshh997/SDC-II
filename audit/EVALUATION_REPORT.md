@@ -1,0 +1,11 @@
+# Evaluation status
+
+**New valid diagnostic metrics: none.** Genuine held-out X-Fusion evaluation and genuine-examination end-to-end inference are blocked by missing paired data and a compatible trained checkpoint. No accuracy, F1, ROC-AUC, PR-AUC or clinical performance value is claimed for the corrected system.
+
+The evaluator computes micro/macro F1, precision, recall, per-class F1/precision/recall, ROC-AUC, average precision and confusion counts using checkpoint thresholds selected on validation. Undefined single-class ROC/AP values are null. Average precision is named explicitly and is not silently equated with trapezoidal PR area. Dataset fingerprints prevent accidentally evaluating a different manifest. Runtime timing includes data loading/preprocessing/prediction, with its scope stated. GPU peak allocated memory is measured where available. Robust CPU-memory profiling, a warmed latency distribution and complete ablation experiments remain outstanding.
+
+`encoder_gpu_verification.json` contains measured **software-fixture** timings on an RTX 4060 Laptop GPU, CUDA-enabled PyTorch 2.14.0+cu130. It records shapes, nonzero gradients in CNN/text projection/metadata MLP/attention, nonzero prediction sensitivity to all three inputs, explanation success and peak CUDA allocation. These timings use artificial inputs and a disposable untrained fusion head. They are neither clinical throughput benchmarks nor diagnostic scores.
+
+DAViT's published pneumonia and subtype scores belong to that separate paper and dataset. Historical local `outputs/xfusion` values arose in the label-derived-input workflow and are excluded from valid X-Fusion evidence. The independently named age/sex and image baselines under `outputs/mike_independent_baselines` remain historical artifacts; they were not retrained or relabeled as full tri-modal results.
+
+Before research claims: obtain reviewed paired data, address the label schema and prediction-time boundary, train with all three modalities, choose hyperparameters and thresholds on validation, evaluate the locked test partition once, assess bias and calibration, and run controlled separate ablations under the same partition. Attention and saliency require independent fidelity/localization assessment.

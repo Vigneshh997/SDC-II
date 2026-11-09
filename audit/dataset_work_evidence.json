@@ -1,0 +1,97 @@
+{
+  "source_files_sha256": {
+    ".gitignore": "085060ccc4c1677098eefed6c2b90bda23c6787b64facbfeddd0b7c46f4c150c",
+    "backend\\scripts\\prepare_mimic_demo.py": "e918cfe329ef2d5cd3c76a6cb54f7c6139b3a90d9bb6abc211541253e35e7117",
+    "backend\\scripts\\verify_clinical_components.py": "06b78940b17b999cab8a7d0434e92be80ac0c19ade86934b7606034e357c88e7",
+    "tests\\test_mimic_demo.py": "49cca231546ec3ca496a90ce4591f4404487dc0c24bd081bc7089eb42146a970",
+    "audit\\DATASET_SEARCH_AND_USE.md": "b3cf2be598a9d0ce41d60883a920952e9ff69a1a75a1c77f64c6542d7714313e",
+    "audit\\mimic_demo_preparation.json": "af670d617a3560297f4b6f68c087fec04be7fde3f9f66c02b81c2c7e0dbed7e9",
+    "audit\\clinical_component_verification.json": "e202394d9f7b295b3a22591151a19cf2857dc27f4a1e9e9e9a83276e7d9d4232",
+    "audit\\test_summary.json": "0224d7758e0963c838d1417cc64c29ef708c118a235fdfe59252d17161f7d844",
+    "audit\\backend_tests.txt": "558fc260fa2d5308d9b2727d5a4b1feb32c74630a5a7075c4bac58321fc5dd63",
+    "audit\\bandit_dataset_work.json": "cae1c2d127252d0d1ca7c50b811a22a859b2d87c1c0e4e2563ab00275b1055d5"
+  },
+  "publisher_checksums_verified": true,
+  "tests": {
+    "tests_run": 43,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 18.01104629999827,
+    "scope": "Artificial software fixtures, not genuine patient end-to-end validation."
+  },
+  "preparation": {
+    "source": "https://physionet.org/content/mimic-iv-ed-demo/2.2/",
+    "license": "Open Data Commons Open Database License v1.0",
+    "ed_stays": 222,
+    "triage_rows": 222,
+    "vital_sign_rows": 1038,
+    "source_patients": 64,
+    "staged_complete_rows": 193,
+    "staged_patients": 51,
+    "excluded_incomplete_or_invalid_rows": 29,
+    "exclusion_error_types": {
+      "ValueError": 29
+    },
+    "metadata_fields": [
+      "sex",
+      "temperature",
+      "heart_rate",
+      "resp_rate",
+      "spo2"
+    ],
+    "seed": 42,
+    "split_unit": "Patient; all ED stays of a patient remain together",
+    "component_split_rows": {
+      "train": 161,
+      "test": 25,
+      "val": 7
+    },
+    "component_split_patients": {
+      "train": 40,
+      "val": 5,
+      "test": 6
+    },
+    "raw_data_persisted": "backend\\data\\external\\mimic-iv-ed-demo-2.2",
+    "staging_sha256": "7cf992533fb71650869a3a552d3acff6a7eb4eded3edb492ae27c54a6a67dcc1",
+    "diagnostic_targets": "Not acquired or inferred",
+    "paired_xrays": 0,
+    "trimodal_training_ready": false,
+    "limitation": "Observed clinical components only. ED arrival time is not an exact measurement timestamp. Study-time linkage and matching X-rays remain unavailable."
+  },
+  "clinical_component_check": {
+    "source": "Observed MIMIC-IV-ED Demo 2.2 clinical records",
+    "device": "cuda",
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "observed_records_encoded": 8,
+    "metadata_fields": [
+      "sex",
+      "temperature",
+      "heart_rate",
+      "resp_rate",
+      "spo2"
+    ],
+    "encoded_metadata_width": 8,
+    "cxr_bert_token_feature_shape": [
+      8,
+      8,
+      768
+    ],
+    "metadata_mlp_feature_shape": [
+      8,
+      512
+    ],
+    "features_finite": true,
+    "patient_disjoint": true,
+    "normalizer_fit_scope": "Training component patients only",
+    "mlp_status": "Random initialization; forward validation only; no optimization or checkpoint saved",
+    "diagnostic_predictions_produced": false,
+    "trimodal_training_performed": false,
+    "missing": [
+      "Matching authorized X-rays",
+      "Reviewed study-time linkage",
+      "Compatible disease labels"
+    ]
+  },
+  "full_trimodal_training_ready": false
+}

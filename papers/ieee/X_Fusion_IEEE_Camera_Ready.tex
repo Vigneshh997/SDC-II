@@ -1,0 +1,379 @@
+\documentclass[conference,letterpaper]{IEEEtran}
+
+\usepackage{amsmath,amssymb,cite,booktabs}
+
+\usepackage[nospread]{flushend}
+\renewcommand{\IEEEkeywordsname}{Keywords}
+\usepackage[hidelinks]{hyperref}
+
+\hypersetup{pdftitle={X-Fusion: Tri-Modal Transformer Fusion for Multi-Label Chest X-ray Analysis},pdfauthor={K. Vishal Reddy, P. Deepesh Reddy, R. Vignesh, R. Sidhardh Reddy, Saharsh Machendra, and Vura Surya Venkat}}
+
+\begin{document}
+
+\title{X-Fusion: Tri-Modal Transformer Fusion for Multi-Label Chest X-ray Analysis}
+
+\author{\setlength{\tabcolsep}{3pt}\begin{tabular}{ccc}
+\begin{minipage}[t]{0.31\textwidth}\centering
+\normalsize\textbf{K. Vishal Reddy}\\
+\footnotesize\textit{Department of Computer Science}\\
+\textit{and Engineering}\\
+\textit{Keshav Memorial Institute of Technology}\\
+Hyderabad, Telangana, India\\
+Kasarlavishalreddy@gmail.com
+\end{minipage}&
+
+\begin{minipage}[t]{0.31\textwidth}\centering
+\normalsize\textbf{P. Deepesh Reddy}\\
+\footnotesize\textit{Department of Computer Science}\\
+\textit{and Engineering}\\
+\textit{Keshav Memorial Institute of Technology}\\
+Hyderabad, Telangana, India\\
+deepeshp113@gmail.com
+\end{minipage} &
+\begin{minipage}[t]{0.31\textwidth}\centering
+\normalsize\textbf{R. Vignesh}\\
+\footnotesize\textit{Department of Computer Science}\\
+\textit{and Engineering}\\
+\textit{Keshav Memorial Institute of Technology}\\
+Hyderabad, Telangana, India\\
+rvignesh72007@gmail.com
+\end{minipage}\\[1em]
+\begin{minipage}[t]{0.31\textwidth}\centering
+\normalsize\textbf{R. Sidhardh Reddy}\\
+\footnotesize\textit{Department of Computer Science}\\
+\textit{and Engineering}\\
+\textit{Keshav Memorial Institute of Technology}\\
+Hyderabad, Telangana, India\\
+sidhardhramini2007@gmail.com
+\end{minipage} &
+\begin{minipage}[t]{0.31\textwidth}\centering
+\normalsize\textbf{Saharsh Machendra}\\
+\footnotesize\textit{Department of Computer Science}\\
+\textit{and Engineering}\\
+\textit{Keshav Memorial Institute of Technology}\\
+Hyderabad, Telangana, India\\
+saharshbatte356@gmail.com
+\end{minipage} &
+\begin{minipage}[t]{0.31\textwidth}\centering
+\normalsize\textbf{Vura Surya Venkat}\\
+\footnotesize\textit{Department of Computer Science}\\
+\textit{and Engineering}\\
+\textit{Keshav Memorial Institute of Technology}\\
+Hyderabad, Telangana, India\\
+vuraramesh01@gmail.com
+\end{minipage}\end{tabular}}
+
+\maketitle
+
+\begin{abstract}X-Fusion combines chest radiographs, clinical notes, and six patient fields for fourteen-label screening. Pooled BiomedCLIP image features, projected CXR-BERT text features, and a metadata encoder form a four-token sequence with a learned classification token. A two-layer Transformer produces independent finding scores, while a web interface provides attention overlays and metadata attribution. The supplied paper draft reports macro AUROC 0.9420, micro AUROC 0.9615, and mean average precision 0.8840, compared with 0.8162, 0.8740, and 0.7420 for its vision-only baseline. These draft-reported figures are not independently verified and differ from the repository's saved evaluation report. Moreover, the available data pipeline generates auxiliary inputs from disease labels, precluding an independent clinical-performance claim. This paper describes the prototype and clearly distinguishes draft-reported results from verified implementation evidence.\end{abstract}
+
+\begin{IEEEkeywords}Chest radiography, multimodal learning, Transformer fusion, multi-label classification, explainability.\end{IEEEkeywords}
+
+\section{Introduction}
+
+Chest radiographs can contain multiple coexisting findings, motivating multi-label classification. NIH ChestX-ray14 provides a large-scale setting for this task \cite{wang2017,nihdataset}. X-Fusion integrates image, clinical-note, and structured patient inputs using BiomedCLIP \cite{biomedclip2023} and CXR-BERT \cite{cxrbert2022}. The system combines pretrained representations with a compact Transformer and exposes finding scores and explanation views through a web interface.
+
+The engineering objective is to integrate heterogeneous pretrained features in a compact shared representation and expose their outputs through one explanation-enabled application. The contribution is a tri-modal software workflow: modality-specific feature extraction, four-token fusion, fourteen-label prediction, and visual and metadata attribution. This paper describes the implemented architecture, its loss functions, available data partition, recorded optimization behavior, and results reported in the supplied paper draft, with their verification status stated explicitly.
+
+\section{Literature Review}
+
+Wang et al. introduced large-scale chest radiograph benchmarks \cite{wang2017}; ChestX-ray14 supplies the fourteen labels used in this study \cite{nihdataset}. CheXpert extends this research direction with uncertainty labels and expert comparison \cite{irvin2019}. Vision Transformers encode patch-based image representations \cite{dosovitskiy2021}, while BiomedCLIP and CXR-BERT provide pretrained biomedical image and language features \cite{biomedclip2023,cxrbert2022}.
+
+DAViT combines a Vision Transformer, a shallow convolutional neural network, and domain adaptation for pneumonia detection \cite{davit2025}. X-Fusion instead combines pooled visual features with language and metadata for fourteen-label classification. These systems address different tasks and are not directly compared here.
+
+Asymmetric Loss (ASL) addresses the imbalance between positive and negative labels \cite{ridnik2021}. InfoNCE provides a contrastive learning objective \cite{oord2018}, used here for batchwise image-text alignment. SHapley Additive exPlanations (SHAP) supports metadata attribution \cite{lundberg2017}. Transformer interpretability research motivates distinguishing attention maps from disease-specific attribution \cite{chefer2021}.
+
+\section{Proposed Architecture and Methodology}
+
+Fig. \ref{fig:architecture} shows the prediction path. BiomedCLIP returns a pooled 512-dimensional image vector. A clinical note is truncated to 256 tokens; its first CXR-BERT output token is projected from 768 to 512 dimensions. A multilayer perceptron (MLP) maps six metadata fields through 128 hidden units to 512 features. The fields are age, sex, temperature, heart rate, respiratory rate, and peripheral oxygen saturation (SpO2).
+
+\begin{figure}[t]\centering\setlength{\unitlength}{1pt}\begin{picture}(250,216)\footnotesize
+\put(1,185){\framebox(78,26){Chest X-ray}}
+\put(40,185){\vector(0,-1){18}}
+\put(1,130){\framebox(78,37){\shortstack{BiomedCLIP\\512 features}}}
+\put(40,130){\vector(0,-1){22}}
+\put(86,185){\framebox(78,26){Clinical note}}
+\put(125,185){\vector(0,-1){18}}
+\put(86,130){\framebox(78,37){\shortstack{CXR-BERT\\512 features}}}
+\put(125,130){\vector(0,-1){22}}
+\put(171,185){\framebox(78,26){Six patient fields}}
+\put(210,185){\vector(0,-1){18}}
+\put(171,130){\framebox(78,37){\shortstack{Metadata MLP\\512 features}}}
+\put(210,130){\vector(0,-1){22}}
+\put(1,77){\framebox(248,31){\shortstack{CLS + image + text + metadata\\Four 512-dimensional tokens}}}
+\put(125,77){\vector(0,-1){17}}
+\put(23,28){\framebox(204,32){\shortstack{Two Transformer encoder layers\\8 heads; feed-forward width 2,048}}}
+\put(125,28){\vector(0,-1){15}}
+\put(0,0){\makebox(250,10){Dropout + linear head + 14 sigmoid scores}}
+\end{picture}\caption{X-Fusion architecture with three modality vectors and a learned classification token.}\label{fig:architecture}\end{figure}
+
+The learned classification (CLS) token and three modality vectors form a four-token sequence. Two Transformer encoder layers apply self-attention with eight heads and a 2,048-unit feed-forward sublayer. The fused CLS representation passes through dropout and a linear classifier. Independent sigmoid functions produce fourteen finding scores.
+
+The output labels are Atelectasis, Cardiomegaly, Effusion, Infiltration, Mass, Nodule, Pneumonia, Pneumothorax, Consolidation, Edema, Emphysema, Fibrosis, Pleural Thickening, and Hernia. Multiple findings may be predicted for one image.
+
+
+\subsection{Modality Representations}
+
+Let $I$ denote the preprocessed red-green-blue (RGB) image, $T$ the tokenized note, and $m$ the ordered metadata vector. Image encoder ${f}_{v}$ and first-token language representation ${h}_{t}$ produce:
+
+\begin{equation}{z}_{v}={f}_{v}\left(I\right)\in{\mathbb{R}}^{512},\label{eq:vision}\end{equation}
+
+\begin{equation}{z}_{t}={W}_{t}{h}_{t}\left(T\right)+{b}_{t}\in{\mathbb{R}}^{512},\label{eq:text}\end{equation}
+
+Both features have 512 entries. In \eqref{eq:text}, ${W}_{t}$ is a 512-by-768 projection matrix and ${b}_{t}$ is its 512-entry bias.
+
+The metadata encoder uses Gaussian error linear unit activation $\operatorname{GELU}$ and dropout ${\operatorname{D}}_{0.1}$:
+
+\begin{equation}\begin{gathered}u={\operatorname{D}}_{0.1}\left(\operatorname{GELU}\left({W}_{1}m+{b}_{1}\right)\right),\\{z}_{m}=\operatorname{GELU}\left({W}_{2}u+{b}_{2}\right).\end{gathered}\label{eq:metadata}\end{equation}
+
+The matrices ${W}_{1}$ and ${W}_{2}$ have sizes 128 by 6 and 512 by 128, with biases ${b}_{1}$ and ${b}_{2}$. The intermediate vector $u$ has 128 entries. Dropout ${\operatorname{D}}_{0.1}$ has probability 0.1 during training and is disabled at inference.
+
+\subsection{Fusion and Multi-Label Prediction}
+
+The learned token ${e}_{\mathrm{CLS}}$ is stacked with the modality representations; semicolons denote token stacking:
+
+\begin{equation}{S}_{0}=\left[{e}_{\mathrm{CLS}};{z}_{v};{z}_{t};{z}_{m}\right]\in{\mathbb{R}}^{4\times512},\label{eq:sequence}\end{equation}
+
+For each head, $Q$, $K$, and $V$ are query, key, and value projections of the same sequence. Scaled dot-product attention \cite{vaswani2017} is:
+
+\begin{equation}\operatorname{A}\left(Q,K,V\right)=\operatorname{softmax}\left(\frac{Q{K}^{\mathsf{T}}}{\sqrt{{d}_{k}}}\right)V,\label{eq:attention}\end{equation}
+
+Here $\mathsf{T}$ denotes transpose and ${d}_{k}$ is the key dimension, equal to 64. Softmax operates across key positions. Each encoder layer also includes output projection, residual connections, layer normalization, and a feed-forward sublayer.
+
+The two-layer encoder $\operatorname{F}$ returns the fused vector $h$. Classification is defined by:
+
+\begin{equation}\begin{gathered}h={\operatorname{F}\left({S}_{0}\right)}_{\mathrm{CLS}},\\o={W}_{c}{\operatorname{D}}_{0.3}\left(h\right)+{b}_{c},\\{p}_{k}=\sigma\left({o}_{k}\right),\quad{}k=1,\ldots,14.\end{gathered}\label{eq:prediction}\end{equation}
+
+The classifier matrix ${W}_{c}$ has size 14 by 512 and ${b}_{c}$ has 14 entries. The logit vector is $o$; $k$ indexes findings, and $\sigma$ is the sigmoid function. Classifier dropout is 0.3 during training.
+
+\subsection{Classification and Contrastive Losses}
+
+For batch size $B$, ${y}_{ik}$ is the binary label and ${p}_{ik}$ is the sigmoid score for sample $i$ and finding $k$. The clipped negative probability is:
+
+\begin{equation}{q}_{ik}=\operatorname{min}\left(1-{p}_{ik}+0.05,1\right),\label{eq:negative}\end{equation}
+
+Using numerical floor $\epsilon$ equal to ${10}^{-8}$ and focusing exponents 1 and 4, the per-label ASL term is:
+
+\begin{equation}\begin{gathered}{\ell}_{ik}=-{y}_{ik}\left(1-{p}_{ik}\right)\operatorname{log}\left(\operatorname{max}\left({p}_{ik},\epsilon\right)\right)\\-\left(1-{y}_{ik}\right){\left(1-{q}_{ik}\right)}^{4}\operatorname{log}\left(\operatorname{max}\left({q}_{ik},\epsilon\right)\right),\end{gathered}\label{eq:label_loss}\end{equation}
+
+The classification loss sums over fourteen findings and averages over samples:
+
+\begin{equation}{\mathcal{L}}_{\mathrm{ASL}}=\frac{1}{B}\sum_{i=1}^{B}\sum_{k=1}^{14}{\ell}_{ik}.\label{eq:asl}\end{equation}
+
+Let ${v}_{i}$ and ${t}_{j}$ be unit-normalized image and text features. Their batchwise similarity is:
+
+\begin{equation}{C}_{ij}=\frac{{{v}_{i}}^{\mathsf{T}}{t}_{j}}{\tau},\label{eq:similarity}\end{equation}
+
+Temperature $\tau$ is 0.07. With matching sample indices $a$ from zero to $B-1$ and mean cross-entropy $\operatorname{CE}$, symmetric alignment uses:
+
+\begin{equation}{\mathcal{L}}_{\mathrm{NCE}}=\frac{1}{2}\left[\operatorname{CE}\left(C,a\right)+\operatorname{CE}\left({C}^{\mathsf{T}},a\right)\right],\label{eq:nce}\end{equation}
+
+The combined objective is:
+
+\begin{equation}{\mathcal{L}}_{\mathrm{train}}={\mathcal{L}}_{\mathrm{ASL}}+0.1{\mathcal{L}}_{\mathrm{NCE}}.\label{eq:total}\end{equation}
+
+\section{Dataset and Experimental Setup}
+
+\subsection{Source Data and Patient Splits}
+
+The experiment uses the available NIH ChestX-ray14 subset, its metadata CSV, and official image lists \cite{wang2017,nihdataset}. Of 31,877 local PNG files, 31,630 matched metadata entries; the complete release contains 112,120 radiographs. Training and validation are drawn from the official train/validation pool. Patient IDs are shuffled with seed 42 and 10\% are reserved for validation; test images follow the official test list. Table \ref{tab:split} summarizes the partitions, which have no shared patient IDs.
+
+\begin{table}[t]\caption{Dataset partitions}\label{tab:split}\centering\footnotesize\begin{tabular}{@{}p{0.36\columnwidth}p{0.27\columnwidth}p{0.27\columnwidth}@{}}\toprule Partition & Images & Patients\\\midrule Training & 21,964 & 9,939\\Validation & 2,566 & 1,104\\Test & 7,100 & 1,137\\Total & 31,630 & 12,180\\\bottomrule\end{tabular}\end{table}
+
+Images are converted to RGB and resized to 224 by 224 pixels. Channel means are 0.485, 0.456, and 0.406; standard deviations are 0.229, 0.224, and 0.225. Training uses horizontal flipping, rotation up to ten degrees, and brightness/contrast jitter of 0.15. Validation and test use deterministic image preprocessing.
+
+\begin{table}[t]\caption{Positive-label counts by partition}\label{tab:prevalence}\centering\footnotesize
+\begin{tabular}{@{}lrrr@{}}\toprule Finding & Training & Validation & Test\\\midrule
+Atelectasis & 3,237 & 367 & 879\\
+Cardiomegaly & 723 & 107 & 387\\
+Effusion & 2,687 & 329 & 1,270\\
+Infiltration & 3,629 & 433 & 1,128\\
+Mass & 1,600 & 164 & 476\\
+Nodule & 2,111 & 226 & 476\\
+Pneumonia & 42 & 5 & 18\\
+Pneumothorax & 1,148 & 131 & 1,024\\
+Consolidation & 132 & 11 & 62\\
+Edema & 395 & 43 & 262\\
+Emphysema & 557 & 70 & 335\\
+Fibrosis & 558 & 57 & 190\\
+Pleural Thickening & 787 & 94 & 348\\
+Hernia & 63 & 8 & 49\\
+\bottomrule\end{tabular}\end{table}
+
+Table~\ref{tab:prevalence} reports positive-label counts for the same partitions. Training positives range from 42 for Pneumonia to 3,629 for Infiltration. This imbalance motivates the asymmetric classification objective. Counts can overlap because an image may have multiple findings. No Finding images have an all-zero fourteen-label target rather than a separate fifteenth output.
+
+\subsection{Auxiliary Inputs and Training Configuration}
+
+Age and sex are obtained from dataset metadata. The current loader generates clinical notes from disease-specific templates and samples the four vital signs from label-conditioned distributions. These auxiliary inputs are synthetic and are regenerated when samples are loaded. Their role in interpreting the recorded results is discussed in Section~\ref{sec:limitations}.
+
+Training uses AdamW with cosine annealing and the settings in Table \ref{tab:training}. The text encoder is frozen. The available checkpoint stores epoch 14. Precision and accumulation entries describe the training script configuration.
+
+\begin{table}[t]\caption{Training configuration}\label{tab:training}\centering\footnotesize\begin{tabular}{@{}p{0.4794\columnwidth}p{0.4606\columnwidth}@{}}\toprule Setting & Value\\\midrule Batch size / accumulation & 4 / 8 batches\\Maximum epochs & 15\\Learning rate & 0.0002\\Weight decay & 0.0001\\Precision requested & 16-bit mixed\\Text encoder & Frozen\\Fusion dropout & 0.1\\Classifier dropout & 0.3\\Saved checkpoint epoch & 14\\\bottomrule\end{tabular}\end{table}
+
+\section{Results and Discussion}\label{sec:results}
+
+\subsection{Recorded Optimization Behavior}
+
+Fourteen paired TensorBoard records cover logged epochs 1 through 14. Table \ref{tab:losses} reports the first and final recorded losses; Fig. \ref{fig:losses} plots all available epochs. Training loss decreases from 0.1545 to 0.1190, a relative reduction of 22.95\%. Validation ASL decreases from 0.0207 to 0.0007. These traces characterize optimization under the present input construction.
+
+\begin{table}[t]\caption{Recorded loss endpoints}\label{tab:losses}\centering\footnotesize\begin{tabular}{@{}p{0.522\columnwidth}p{0.189\columnwidth}p{0.189\columnwidth}@{}}\toprule Logged quantity & First & Last\\\midrule Training ASL + 0.1 InfoNCE & 0.1545 & 0.1190\\Validation ASL & 0.0207 & 0.0007\\\bottomrule\end{tabular}\end{table}
+
+\begin{figure}[!b]\centering\setlength{\unitlength}{1pt}\begin{picture}(250,232)\footnotesize
+\put(39,221){\makebox(200,10)[l]{\textbf{Training: ASL + 0.1 InfoNCE}}}
+\put(39,139){\line(1,0){200}}
+\put(39,139){\line(0,1){73}}
+\put(0,143.11){\makebox(34,8)[r]{0.12}}
+\put(0,159.33){\makebox(34,8)[r]{0.13}}
+\put(0,175.56){\makebox(34,8)[r]{0.14}}
+\put(0,191.78){\makebox(34,8)[r]{0.15}}
+\put(0,208.00){\makebox(34,8)[r]{0.16}}
+\put(31.00,126){\makebox(16,8){1}}
+\put(77.15,126){\makebox(16,8){4}}
+\put(123.31,126){\makebox(16,8){7}}
+\put(169.46,126){\makebox(16,8){10}}
+\put(231.00,126){\makebox(16,8){14}}
+\qbezier(39.000,203.064)(46.692,195.227)(54.385,187.390)
+\qbezier(54.385,187.390)(62.077,183.003)(69.769,178.615)
+\qbezier(69.769,178.615)(77.462,175.003)(85.154,171.391)
+\qbezier(85.154,171.391)(92.846,168.607)(100.538,165.822)
+\qbezier(100.538,165.822)(108.231,163.778)(115.923,161.733)
+\qbezier(115.923,161.733)(123.615,160.164)(131.308,158.595)
+\qbezier(131.308,158.595)(139.000,157.093)(146.692,155.591)
+\qbezier(146.692,155.591)(154.385,153.575)(162.077,151.559)
+\qbezier(162.077,151.559)(169.769,150.970)(177.462,150.381)
+\qbezier(177.462,150.381)(185.154,149.258)(192.846,148.135)
+\qbezier(192.846,148.135)(200.538,147.553)(208.231,146.970)
+\qbezier(208.231,146.970)(215.923,146.525)(223.615,146.080)
+\qbezier(223.615,146.080)(231.308,145.814)(239.000,145.549)
+\put(39.000,203.064){\circle*{2.4}}
+\put(54.385,187.390){\circle*{2.4}}
+\put(69.769,178.615){\circle*{2.4}}
+\put(85.154,171.391){\circle*{2.4}}
+\put(100.538,165.822){\circle*{2.4}}
+\put(115.923,161.733){\circle*{2.4}}
+\put(131.308,158.595){\circle*{2.4}}
+\put(146.692,155.591){\circle*{2.4}}
+\put(162.077,151.559){\circle*{2.4}}
+\put(177.462,150.381){\circle*{2.4}}
+\put(192.846,148.135){\circle*{2.4}}
+\put(208.231,146.970){\circle*{2.4}}
+\put(223.615,146.080){\circle*{2.4}}
+\put(239.000,145.549){\circle*{2.4}}
+\put(39,111){\makebox(200,10)[l]{\textbf{Validation: ASL}}}
+\put(39,29){\line(1,0){200}}
+\put(39,29){\line(0,1){73}}
+\put(0,25.00){\makebox(34,8)[r]{0.000}}
+\put(0,41.59){\makebox(34,8)[r]{0.005}}
+\put(0,58.18){\makebox(34,8)[r]{0.010}}
+\put(0,74.77){\makebox(34,8)[r]{0.015}}
+\put(0,91.36){\makebox(34,8)[r]{0.020}}
+\put(31.00,16){\makebox(16,8){1}}
+\put(77.15,16){\makebox(16,8){4}}
+\put(123.31,16){\makebox(16,8){7}}
+\put(169.46,16){\makebox(16,8){10}}
+\put(231.00,16){\makebox(16,8){14}}
+\qbezier(39.000,97.648)(46.692,88.130)(54.385,78.613)
+\qbezier(54.385,78.613)(62.077,80.295)(69.769,81.976)
+\qbezier(69.769,81.976)(77.462,69.487)(85.154,56.997)
+\qbezier(85.154,56.997)(92.846,54.762)(100.538,52.526)
+\qbezier(100.538,52.526)(108.231,55.070)(115.923,57.614)
+\qbezier(115.923,57.614)(123.615,52.850)(131.308,48.086)
+\qbezier(131.308,48.086)(139.000,48.388)(146.692,48.690)
+\qbezier(146.692,48.690)(154.385,43.098)(162.077,37.507)
+\qbezier(162.077,37.507)(169.769,39.156)(177.462,40.805)
+\qbezier(177.462,40.805)(185.154,37.481)(192.846,34.157)
+\qbezier(192.846,34.157)(200.538,33.697)(208.231,33.237)
+\qbezier(208.231,33.237)(215.923,33.172)(223.615,33.106)
+\qbezier(223.615,33.106)(231.308,32.258)(239.000,31.409)
+\put(39.000,97.648){\circle*{2.4}}
+\put(54.385,78.613){\circle*{2.4}}
+\put(69.769,81.976){\circle*{2.4}}
+\put(85.154,56.997){\circle*{2.4}}
+\put(100.538,52.526){\circle*{2.4}}
+\put(115.923,57.614){\circle*{2.4}}
+\put(131.308,48.086){\circle*{2.4}}
+\put(146.692,48.690){\circle*{2.4}}
+\put(162.077,37.507){\circle*{2.4}}
+\put(177.462,40.805){\circle*{2.4}}
+\put(192.846,34.157){\circle*{2.4}}
+\put(208.231,33.237){\circle*{2.4}}
+\put(223.615,33.106){\circle*{2.4}}
+\put(239.000,31.409){\circle*{2.4}}
+\put(39,0){\makebox(200,10){Logged epoch}}
+\end{picture}\caption{Recorded training and validation losses across fourteen epochs. Panels use different scales and objectives.}\label{fig:losses}\end{figure}
+
+\subsection{Draft-Reported Comparative Results}
+
+The supplied \texttt{X\_Fusion\_IEEE\_Paper.docx} reports the comparison in Table \ref{tab:overall-results}. The listed tri-modal macro AUROC is 0.9420, compared with 0.8162 for the vision-only baseline. The draft also reports a Pneumonia F1 score of 0.925 at a validation-selected threshold of 0.35. These values are transcribed from that document; the underlying predictions, per-class score files, and statistical-test output were not available to independently reproduce them.
+
+\begin{table}[t]\caption{Overall metrics reported in the supplied Word draft; not independently verified}\label{tab:overall-results}\centering\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.42\columnwidth}rrr@{}}\toprule Model & \shortstack{Macro\\AUROC} & \shortstack{Micro\\AUROC} & mAP\\\midrule Vision-only baseline & 0.8162 & 0.8740 & 0.7420\\BiomedCLIP + CXR-BERT & 0.8870 & 0.9215 & 0.8250\\X-Fusion tri-modal & 0.9420 & 0.9615 & 0.8840\\\bottomrule\end{tabular}\end{table}
+
+\subsection{Draft-Reported Ablation and Threshold Results}
+
+Table \ref{tab:ablation-results} transcribes the Word draft's modality ablation. It reports macro AUROC increasing from 0.8162 for vision only to 0.9420 for the full system. The draft's Pneumonia threshold sweep is shown in Table \ref{tab:threshold-results}; it identifies 0.35 as the operating point with the highest F1 among those listed. Neither table is backed by reproducible prediction files in the repository.
+
+\begin{table}[t]\caption{Modality ablation metrics reported in the supplied Word draft}\label{tab:ablation-results}\centering\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.40\columnwidth}rrrr@{}}\toprule Configuration & \shortstack{Macro\\AUROC} & mAP & Hamming & \shortstack{Subset\\Acc.}\\\midrule Vision only & 0.8162 & 0.7420 & 0.0840 & 0.6120\\Vision + metadata & 0.8540 & 0.7890 & 0.0710 & 0.6780\\Vision + text & 0.8870 & 0.8250 & 0.0580 & 0.7340\\Tri-modal concatenation & 0.9020 & 0.8410 & 0.0490 & 0.7680\\X-Fusion & 0.9420 & 0.8840 & 0.0320 & 0.8420\\\bottomrule\end{tabular}\end{table}
+
+\begin{table}[t]\caption{Pneumonia threshold results reported in the supplied Word draft}\label{tab:threshold-results}\centering\scriptsize\begin{tabular}{@{}rrrr@{}}\toprule Threshold & Precision & Recall & F1\\\midrule 0.20 & 0.812 & 0.978 & 0.887\\0.30 & 0.885 & 0.951 & 0.917\\0.35 & 0.918 & 0.932 & 0.925\\0.40 & 0.935 & 0.884 & 0.909\\0.50 & 0.961 & 0.810 & 0.879\\\bottomrule\end{tabular}\end{table}
+
+The repository separately contains a saved evaluation report for 7,100 official test-split images, reporting macro AUROC 1.0000, macro AUPRC 0.9953, and macro F1 0.9709. Its metadata explicitly discloses that notes and vital signs are generated from disease labels. This report differs from the metrics in the supplied Word draft, and neither set can be treated as independently verified clinical performance given the label-conditioned inputs and the absence of reproducible predictions.
+
+\subsection{Interpretation of the Recorded Results}
+
+Training reports ASL plus 0.1 InfoNCE, whereas validation reports ASL alone. The two curves therefore represent different objectives and should not be compared as equivalent performance measures. Training also uses augmentation and dropout, so the declining validation loss alone does not establish generalization. The reported comparative and ablation results are draft-sourced, not independently reproduced; the separate saved test report is affected by target leakage.
+
+
+\subsection{Attention and Metadata Attribution}
+
+The image view reconstructs attention from the final visual Transformer block. Classification-token attention is averaged across twelve visual heads, reshaped from 196 patches to a 14-by-14 grid, normalized, and overlaid on the radiograph. This provides a spatial view of visual attention; it is not a disease-specific localization map.
+
+Kernel SHAP \cite{lundberg2017} evaluates metadata while keeping image and text features fixed. Absolute attributions are summed across fourteen outputs and normalized across the six fields. The displayed values indicate aggregate relative importance. The current reference is an all-zero metadata vector, whose clinical interpretation is limited.
+
+\subsection{Application and Inference Behavior}
+
+A Next.js and React interface sends images, notes, and structured metadata to a FastAPI backend running the PyTorch model. The application validates uploads, loads the checkpoint, and returns sorted scores, attention overlays, and metadata attribution. The interface supports sample inputs and session history.
+
+Missing or invalid metadata receive fixed defaults, and absent text receives a default note. A score cutoff of 0.30 is used for the leading finding. This application setting has not been calibrated as a clinical decision threshold.
+
+\subsection{Evaluation Limitations}\label{sec:limitations}
+
+The main limitations are target leakage and result reproducibility. Generated notes and vital signs depend on the disease labels used for supervision, and patient-disjoint image partitions do not remove this dependency. The comparative scores and ablations transcribed from the supplied Word draft could not be reproduced from saved predictions, while the separate repository evaluation report gives different scores and discloses label-derived inputs. The study also uses a partial dataset with weak image-level labels. Independent clinical inputs, reproducible patient-level predictions, external validation, calibrated thresholds, and an auditable localization evaluation are needed before interpreting these figures as evidence of diagnostic benefit.
+
+
+\section{Conclusion}
+
+X-Fusion integrates pretrained image and language encoders, a metadata MLP, and four-token Transformer fusion in an interactive fourteen-label chest radiograph prototype. The supplied Word draft reports promising comparative and ablation scores, but they remain unverified and conflict with the repository's saved evaluation report. Because auxiliary inputs are label-conditioned, neither result source establishes independent clinical performance. The system remains a research prototype, not a clinical decision-support tool.
+
+\section*{Acknowledgment}
+
+OpenAI Codex assisted in drafting and revising the abstract and Sections I--VI, transcribing implementation-derived equations, checking references, and preparing the architecture and loss figures from project code and saved records.
+
+\begin{thebibliography}{99}
+
+\bibitem{wang2017}X. Wang, Y. Peng, L. Lu, Z. Lu, M. Bagheri, and R. M. Summers, ``ChestX-ray8: Hospital-scale chest X-ray database and benchmarks on weakly-supervised classification and localization of common thorax diseases,'' Proc. IEEE Conf. Comput. Vis. Pattern Recognit., 2017, pp. 2097--2106. [Online]. Available: \href{https://doi.org/10.1109/CVPR.2017.369}{doi:10.1109/CVPR.2017.369}
+
+\bibitem{nihdataset}National Institutes of Health Clinical Center, ``ChestX-ray14 dataset,'' Dataset release. [Online]. Available: \href{https://nihcc.app.box.com/v/ChestXray-NIHCC}{NIH dataset}
+
+\bibitem{biomedclip2023}S. Zhang et al., ``BiomedCLIP: A multimodal biomedical foundation model pretrained from fifteen million scientific image-text pairs,'' arXiv:2303.00915, 2023. [Online]. Available: \href{https://arxiv.org/abs/2303.00915}{arXiv:2303.00915}
+
+\bibitem{cxrbert2022}B. Boecking et al., ``Making the most of text semantics to improve biomedical vision-language processing,'' Computer Vision -- ECCV 2022, pp. 1--21, 2022. [Online]. Available: \href{https://doi.org/10.1007/978-3-031-20059-5_1}{doi:10.1007/978-3-031-20059-5\_1}
+
+\bibitem{irvin2019}J. Irvin et al., ``CheXpert: A large chest radiograph dataset with uncertainty labels and expert comparison,'' Proc. AAAI Conf. Artif. Intell., vol. 33, 2019, pp. 590--597. [Online]. Available: \href{https://doi.org/10.1609/aaai.v33i01.3301590}{doi:10.1609/aaai.v33i01.3301590}
+
+\bibitem{dosovitskiy2021}A. Dosovitskiy et al., ``An image is worth 16x16 words: Transformers for image recognition at scale,'' Proc. Int. Conf. Learn. Represent., 2021. [Online]. Available: \href{https://arxiv.org/abs/2010.11929}{arXiv:2010.11929}
+
+\bibitem{davit2025}M. Fu, C. Tantithamthavorn, and T. Le, ``DAViT: A domain-adapted vision transformer for automated pneumonia detection and explanation using chest X-ray images,'' IEEE Access, vol. 13, pp. 103033--103044, 2025. [Online]. Available: \href{https://doi.org/10.1109/ACCESS.2025.3579314}{doi:10.1109/ACCESS.2025.3579314}
+
+\bibitem{ridnik2021}T. Ridnik et al., ``Asymmetric loss for multi-label classification,'' Proc. IEEE/CVF Int. Conf. Comput. Vis., 2021, pp. 82--91. [Online]. Available: \href{https://doi.org/10.1109/ICCV48922.2021.00015}{doi:10.1109/ICCV48922.2021.00015}
+
+\bibitem{oord2018}A. van den Oord, Y. Li, and O. Vinyals, ``Representation learning with contrastive predictive coding,'' arXiv:1807.03748, 2018. [Online]. Available: \href{https://arxiv.org/abs/1807.03748}{arXiv:1807.03748}
+
+\bibitem{lundberg2017}S. M. Lundberg and S.-I. Lee, ``A unified approach to interpreting model predictions,'' Advances in Neural Information Processing Systems, vol. 30, 2017. [Online]. Available: \href{https://papers.nips.cc/paper_files/paper/2017/hash/8a20a8621978632d76c43dfd28b67767-Abstract.html}{NeurIPS proceedings}
+
+\bibitem{chefer2021}H. Chefer, S. Gur, and L. Wolf, ``Transformer interpretability beyond attention visualization,'' Proc. IEEE/CVF Conf. Comput. Vis. Pattern Recognit., 2021, pp. 782--791. [Online]. Available: \href{https://doi.org/10.1109/CVPR46437.2021.00084}{doi:10.1109/CVPR46437.2021.00084}
+
+\bibitem{vaswani2017}A. Vaswani et al., ``Attention is all you need,'' Advances in Neural Information Processing Systems, vol. 30, 2017. [Online]. Available: \href{https://arxiv.org/abs/1706.03762}{arXiv:1706.03762}
+
+\end{thebibliography}
+
+\end{document}

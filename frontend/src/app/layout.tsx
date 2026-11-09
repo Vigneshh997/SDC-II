@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "X-Fusion | Clinical AI Workstation",
-  description: "AI-assisted chest X-ray screening and analysis.",
+  title: "X-Fusion | Tri-modal research prototype",
+  description: "Research chest X-ray analysis with observed clinical notes and patient attributes.",
 };
 
 export default function RootLayout({
@@ -16,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="light">
-      <body className={`${inter.className} min-h-screen bg-background font-sans antialiased text-foreground selection:bg-primary/20`}>
+      <body className="min-h-screen bg-background font-sans antialiased text-foreground selection:bg-primary/20">
         {children}
       </body>
     </html>

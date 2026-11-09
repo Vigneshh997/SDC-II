@@ -1,0 +1,80 @@
+[
+  {
+    "check": "python_lint",
+    "exit_code": 0,
+    "seconds": 0.14705269999831216,
+    "log": "audit/release/python_lint.txt"
+  },
+  {
+    "check": "python_format",
+    "exit_code": 0,
+    "seconds": 0.18009719999827212,
+    "log": "audit/release/python_format.txt"
+  },
+  {
+    "check": "python_compile",
+    "exit_code": 0,
+    "seconds": 2.807900299998437,
+    "log": "audit/release/python_compile.txt"
+  },
+  {
+    "check": "python_dependencies",
+    "exit_code": 0,
+    "seconds": 0.719064699998853,
+    "log": "audit/release/python_dependencies.txt"
+  },
+  {
+    "check": "backend_tests",
+    "exit_code": 0,
+    "seconds": 20.25322679999954,
+    "log": "audit/release/backend_tests.txt"
+  },
+  {
+    "check": "static_security",
+    "exit_code": 0,
+    "seconds": 0.7853701000021829,
+    "log": "audit/release/static_security.txt"
+  },
+  {
+    "check": "python_advisories",
+    "exit_code": 0,
+    "seconds": 17.745162000002892,
+    "log": "audit/release/python_advisories.txt"
+  },
+  {
+    "check": "encoder_cuda",
+    "exit_code": 0,
+    "seconds": 40.51515460000155,
+    "log": "audit/release/encoder_cuda.txt"
+  },
+  {
+    "check": "frontend_lint",
+    "exit_code": 0,
+    "seconds": 31.65757819999999,
+    "log": "audit/release/frontend_lint.txt"
+  },
+  {
+    "check": "frontend_types",
+    "exit_code": 0,
+    "seconds": 3.4110860000000685,
+    "log": "audit/release/frontend_types.txt"
+  },
+  {
+    "check": "frontend_build",
+    "exit_code": 0,
+    "seconds": 53.93471330000102,
+    "log": "audit/release/frontend_build.txt"
+  },
+  {
+    "check": "frontend_production_advisories",
+    "exit_code": 0,
+    "seconds": 1.859822800000984,
+    "log": "audit/release/frontend_production_advisories.txt"
+  },
+  {
+    "check": "frontend_all_advisories",
+    "exit_code": 1,
+    "seconds": 2.041218399997888,
+    "log": "audit/release/frontend_all_advisories.txt"
+  }
+]

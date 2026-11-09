@@ -1,0 +1,94 @@
+[
+  {
+    "paper": "X_Fusion_MIKE2026_Final.tex",
+    "asset": "llncs",
+    "exists": true
+  },
+  {
+    "paper": "X_Fusion_MIKE2026_Final.tex",
+    "asset": "architecture_diagram.tex",
+    "exists": true
+  },
+  {
+    "paper": "X_Fusion_MIKE2026_Final.tex",
+    "asset": "optimization_traces.jpg",
+    "exists": true
+  },
+  {
+    "paper": "X_Fusion_MIKE2026_Final.tex",
+    "asset": "splncs04",
+    "exists": true
+  },
+  {
+    "paper": "X_Fusion_MIKE2026_Final.tex",
+    "asset": "references",
+    "exists": true
+  },
+  {
+    "paper": "X_Fusion_MIKE2026_Anonymous.tex",
+    "asset": "llncs",
+    "exists": true
+  },
+  {
+    "paper": "X_Fusion_MIKE2026_Anonymous.tex",
+    "asset": "architecture_diagram.tex",
+    "exists": true
+  },
+  {
+    "paper": "X_Fusion_MIKE2026_Anonymous.tex",
+    "asset": "optimization_traces.jpg",
+    "exists": true
+  },
+  {
+    "paper": "X_Fusion_MIKE2026_Anonymous.tex",
+    "asset": "per_disease_performance.pdf",
+    "exists": true
+  },
+  {
+    "paper": "X_Fusion_MIKE2026_Anonymous.tex",
+    "asset": "splncs04",
+    "exists": true
+  },
+  {
+    "paper": "X_Fusion_MIKE2026_Anonymous.tex",
+    "asset": "references",
+    "exists": true
+  },
+  {
+    "paper": "X_Fusion_Springer.tex",
+    "asset": "sn-jnl",
+    "exists": true
+  },
+  {
+    "paper": "X_Fusion_Springer.tex",
+    "asset": "fig1_architecture.png",
+    "exists": true
+  },
+  {
+    "paper": "X_Fusion_Springer.tex",
+    "asset": "fig2_losses.jpg",
+    "exists": true
+  },
+  {
+    "paper": "X_Fusion_Springer.tex",
+    "asset": "fig3_cxr.png",
+    "exists": true
+  },
+  {
+    "paper": "X_Fusion_Springer.tex",
+    "asset": "references",
+    "exists": true
+  },
+  {
+    "pdf": "X_Fusion_MIKE2026_Final.pdf",
+    "original_sha256_unchanged": true
+  },
+  {
+    "pdf": "X_Fusion_MIKE2026_Anonymous.pdf",
+    "original_sha256_unchanged": true
+  },
+  {
+    "pdf": "X_Fusion_Springer.pdf",
+    "original_sha256_unchanged": true
+  }
+]

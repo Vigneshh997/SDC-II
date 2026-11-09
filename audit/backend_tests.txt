@@ -1,0 +1,48 @@
+test_corrupt_image (test_api.ApiTests.test_corrupt_image) ... ok
+test_invalid_metadata_and_empty_note (test_api.ApiTests.test_invalid_metadata_and_empty_note) ... ok
+test_missing_checkpoint_reports_not_ready (test_api.ApiTests.test_missing_checkpoint_reports_not_ready) ... ok
+test_missing_each_required_input (test_api.ApiTests.test_missing_each_required_input) ... ok
+test_oversize_upload (test_api.ApiTests.test_oversize_upload) ... ok
+test_schema_matches_observed_fields (test_api.ApiTests.test_schema_matches_observed_fields) ... ok
+test_unsupported_mime_and_spoofing (test_api.ApiTests.test_unsupported_mime_and_spoofing) ... ok
+test_attention_queries_exclude_own_context (test_core.ArchitectureTests.test_attention_queries_exclude_own_context) ... ok
+test_each_modality_changes_predictions (test_core.ArchitectureTests.test_each_modality_changes_predictions) ... ok
+test_frozen_encoders_stay_in_eval (test_core.ArchitectureTests.test_frozen_encoders_stay_in_eval) ... ok
+test_missing_modalities_rejected (test_core.ArchitectureTests.test_missing_modalities_rejected) ... ok
+test_optimization_updates_parameters (test_core.ArchitectureTests.test_optimization_updates_parameters) ... ok
+test_outputs_and_all_trainable_branches_receive_gradients (test_core.ArchitectureTests.test_outputs_and_all_trainable_branches_receive_gradients) ... ok
+test_padding_cannot_influence_fusion (test_core.ArchitectureTests.test_padding_cannot_influence_fusion) ... ok
+test_actual_training_loop_and_safe_checkpoint_roundtrip (test_core.DatasetTests.test_actual_training_loop_and_safe_checkpoint_roundtrip) ... ok
+test_duplicate_content_rejected (test_core.DatasetTests.test_duplicate_content_rejected) ... ok
+test_label_derived_notes_rejected (test_core.DatasetTests.test_label_derived_notes_rejected) ... ok
+test_nih_and_missing_manifest_rejected (test_core.DatasetTests.test_nih_and_missing_manifest_rejected) ... ok
+test_patient_leakage_rejected (test_core.DatasetTests.test_patient_leakage_rejected) ... ok
+test_uncertain_labels_rejected (test_core.DatasetTests.test_uncertain_labels_rejected) ... ok
+test_unmatched_examination_rejected (test_core.DatasetTests.test_unmatched_examination_rejected) ... ok
+test_valid_structural_manifest (test_core.DatasetTests.test_valid_structural_manifest) ... ok
+test_layercam_uses_positive_spatial_gradients (test_core.ExplanationTests.test_layercam_uses_positive_spatial_gradients) ... ok
+test_missing_shap_background_rejected (test_core.ExplanationTests.test_missing_shap_background_rejected) ... ok
+test_overlay_matches_original_dimensions (test_core.ExplanationTests.test_overlay_matches_original_dimensions) ... ok
+test_service_report_uses_actual_output_and_releases_lock (test_core.ExplanationTests.test_service_report_uses_actual_output_and_releases_lock) ... ok
+test_text_and_signed_shap_attributions_execute (test_core.ExplanationTests.test_text_and_signed_shap_attributions_execute) ... ok
+test_extreme_asl_is_finite (test_core.LossTests.test_extreme_asl_is_finite) ... ok
+test_infonce_prefers_corresponding_pairs (test_core.LossTests.test_infonce_prefers_corresponding_pairs) ... ok
+test_invalid_contrastive_batches_rejected (test_core.LossTests.test_invalid_contrastive_batches_rejected) ... ok
+test_clahe_preserves_image_geometry (test_core.MetadataTests.test_clahe_preserves_image_geometry) ... ok
+test_invalid_metadata_rejected (test_core.MetadataTests.test_invalid_metadata_rejected) ... ok
+test_notes_preserve_negation (test_core.MetadataTests.test_notes_preserve_negation) ... ok
+test_training_only_normalization_and_categories (test_core.MetadataTests.test_training_only_normalization_and_categories) ... ok
+test_unfitted_normalizer_rejected (test_core.MetadataTests.test_unfitted_normalizer_rejected) ... ok
+test_legacy_checkpoint_is_rejected (test_core.MetricsTests.test_legacy_checkpoint_is_rejected) ... ok
+test_perfect_multilabel_predictions (test_core.MetricsTests.test_perfect_multilabel_predictions) ... ok
+test_undefined_auc_is_null (test_core.MetricsTests.test_undefined_auc_is_null) ... ok
+test_missing_or_bad_measurements_are_excluded_not_imputed (test_mimic_demo.MimicDemoTests.test_missing_or_bad_measurements_are_excluded_not_imputed) ... ok
+test_missing_or_redacted_chief_complaint_is_excluded (test_mimic_demo.MimicDemoTests.test_missing_or_redacted_chief_complaint_is_excluded) ... ok
+test_recorded_temperature_is_converted_correctly (test_mimic_demo.MimicDemoTests.test_recorded_temperature_is_converted_correctly) ... ok
+test_splits_are_reproducible_and_patient_disjoint (test_mimic_demo.MimicDemoTests.test_splits_are_reproducible_and_patient_disjoint) ... ok
+test_unmatched_or_duplicate_stays_are_rejected (test_mimic_demo.MimicDemoTests.test_unmatched_or_duplicate_stays_are_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 43 tests in 6.312s
+
+OK

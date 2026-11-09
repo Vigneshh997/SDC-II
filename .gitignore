@@ -28,6 +28,11 @@ __pycache__/
 /lightning_logs/
 /output/
 /outputs/
+/audit/baseline_source.zip
+/audit/baseline_git_diff.patch
+/backend/data/paired/
+/backend/data/external/
+*.tsbuildinfo
 
 # LaTeX build output
 *.aux
@@ -42,3 +47,19 @@ __pycache__/
 /documents/pdf/DAViT_A_*.pdf
 /RESEARCH_PAPER/DAViT_*.pdf
 /RESEARCH_PAPER/conference-template-a4.docx
+
+# Local recovery archives and generated working files
+/backups/
+/tmp/
+/.ruff_cache/
+*.blg
+
+# Private submission records, dataset exports, and duplicate archives
+/papers/submission_records/
+/papers.zip
+/papers/final/mike2026_reviewed/evidence/*_predictions.csv
+/papers/final/mike2026_reviewed/evidence/split_manifest.csv
+# External reference publications and extracted full text remain local
+/papers/references/
+/audit/davit_extracted.txt
+/audit/current_review/davit_text.txt
